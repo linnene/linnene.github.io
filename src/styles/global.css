@@ -138,7 +138,6 @@ img {
 .site-nav a,
 .footer-nav a,
 .sidebar a,
-.post-item-title a,
 .prose a {
   transition: color 160ms ease, background-size 160ms ease, transform 160ms ease;
 }
@@ -160,7 +159,7 @@ img {
 }
 
 .site-title:hover,
-.post-item-title a:hover {
+.post-item:hover .post-item-title {
   color: var(--accent);
   text-shadow: 0.05em 0.05em 0 #dcdcdc;
 }
@@ -245,6 +244,13 @@ img {
   border-bottom: 1px solid var(--soft-line);
   transform-style: preserve-3d;
   will-change: transform;
+  cursor: pointer;
+}
+
+.post-item-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 /* 菱形呼吸动画 */

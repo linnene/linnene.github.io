@@ -10,8 +10,9 @@ const { entry } = Astro.props;
 ---
 
 <article class="post-item">
+  <a href={`/blog/${entry.id}/`} class="post-item-link" aria-label={entry.data.title}></a>
   <h2 class="post-item-title">
-    <a href={`/blog/${entry.id}/`}>{entry.data.title}</a>
+    {entry.data.title}
   </h2>
   <div class="post-item-meta">
     <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
