@@ -1,28 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BlogSidebar from '../components/BlogSidebar.astro';
-
-const projects = [
-  ['MDX Blog', '当前博客本身。第一阶段关注静态写作、公式、代码和图片展示体验。', '进行中'],
-  ['Experiment Notes', '之后用于整理实验配置、结果图、失败记录和复盘。', '规划中'],
-  ['Small Tools', '一些工作流脚本、小工具和可复用模板。', '规划中'],
-];
 ---
 
 <BaseLayout
   title="Projects"
   description="项目和实验记录。"
   headerTitle="Projects"
-  headerSubtitle="实验、复现、小工具和一些还没成型的想法。"
+  headerSubtitle="暂时先留空，之后再放实验、复现、小工具和项目记录。"
 >
   <div class="content-grid">
     <section class="main-column">
-      {projects.map(([title, detail, status]) => (
-        <section class="plain-section">
-          <h2>{title}</h2>
-          <p><strong>{status}</strong> / {detail}</p>
-        </section>
-      ))}
+      <h1 class="page-title">Projects</h1>
+      <p class="empty-state">还没有项目条目。之后有内容时再补充展示。</p>
     </section>
 
     <BlogSidebar />

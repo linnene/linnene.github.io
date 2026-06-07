@@ -11,6 +11,6 @@ export const site = {
     ['Blog', '/blog/'],
     ['Roadmap', '/roadmap/'],
     ['Projects', '/projects/'],
-    ['About', '/about/'],
+    ['Photography', '/photography/'],
   ],
 };

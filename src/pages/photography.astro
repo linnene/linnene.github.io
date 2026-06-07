@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
+---
+
+<BaseLayout
+  title="Photography"
+  description="摄影记录。"
+  headerTitle="Photography"
+  headerSubtitle="先留一个位置，之后再完善照片展示和整理方式。"
+>
+  <div class="content-grid">
+    <section class="main-column">
+      <h1 class="page-title">Photography</h1>
+      <p class="empty-state">摄影板块已预留。之后可以在这里添加相册、照片墙、拍摄地点和器材信息。</p>
+    </section>
+
+    <BlogSidebar />
+  </div>
+</BaseLayout>
