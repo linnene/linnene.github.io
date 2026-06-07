@@ -119,6 +119,31 @@ const pageTitle = title === 'Home' ? site.title : `${title} - ${site.title}`;
 
       document.addEventListener('astro:page-load', setupCodeCopy);
       setupCodeCopy();
+
+      /* ---- 博客卡片 3D 倾斜 ---- */
+      function setupTiltCards() {
+        const CARDS = document.querySelectorAll('.post-item');
+        const RANGE = 14;
+        const HALF = RANGE / 2;
+
+        CARDS.forEach((card) => {
+          card.addEventListener('mousemove', (e) => {
+            const r = card.getBoundingClientRect();
+            const ry = ((e.clientX - r.left) / r.width - 0.5) * RANGE;
+            const rx = ((e.clientY - r.top) / r.height - 0.5) * -RANGE;
+            card.style.transition = 'transform 0.12s ease-out';
+            card.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
+            card.style.transform = 'perspective(600px) rotateX(0) rotateY(0)';
+          });
+        });
+      }
+
+      document.addEventListener('astro:page-load', setupTiltCards);
+      setupTiltCards();
     </script>
   </body>
 </html>
