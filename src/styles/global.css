@@ -243,9 +243,9 @@ img {
   position: relative;
   padding: 1rem 0 1rem 1.1rem;
   border-bottom: 1px solid var(--soft-line);
-  transition: border-color 160ms ease, background-color 160ms ease;
 }
 
+/* 菱形呼吸动画 */
 .post-item::before {
   content: "";
   position: absolute;
@@ -256,48 +256,7 @@ img {
   border: 1px solid var(--accent);
   background: var(--panel);
   transform: rotate(45deg);
-  transition: background-color 160ms ease, transform 160ms ease;
-}
-
-.post-item:hover {
-  border-bottom-color: #bdbdbd;
-  background: linear-gradient(90deg, rgba(238, 238, 238, 0.72), transparent 72%);
-}
-
-.post-item:hover::before {
-  background: var(--accent);
-  transform: rotate(45deg) scale(1.15);
-}
-
-/* 蒸汽网点上浮 */
-.post-item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.55;
-  background:
-    radial-gradient(circle at 12% 92%, rgba(180,180,180,0.45) 0.38rem, transparent 0),
-    radial-gradient(circle at 28% 95%, rgba(168,168,168,0.4) 0.5rem, transparent 0),
-    radial-gradient(circle at 44% 90%, rgba(175,175,175,0.42) 0.42rem, transparent 0),
-    radial-gradient(circle at 60% 96%, rgba(162,162,162,0.38) 0.55rem, transparent 0),
-    radial-gradient(circle at 76% 91%, rgba(172,172,172,0.44) 0.4rem, transparent 0),
-    radial-gradient(circle at 90% 94%, rgba(165,165,165,0.41) 0.48rem, transparent 0),
-    radial-gradient(circle at 18% 102%, rgba(155,155,155,0.35) 0.45rem, transparent 0),
-    radial-gradient(circle at 38% 104%, rgba(170,170,170,0.37) 0.52rem, transparent 0),
-    radial-gradient(circle at 55% 100%, rgba(160,160,160,0.36) 0.4rem, transparent 0),
-    radial-gradient(circle at 72% 105%, rgba(168,168,168,0.38) 0.5rem, transparent 0),
-    radial-gradient(circle at 85% 101%, rgba(158,158,158,0.34) 0.44rem, transparent 0),
-    radial-gradient(circle at 8% 110%, rgba(172,172,172,0.32) 0.42rem, transparent 0),
-    radial-gradient(circle at 32% 112%, rgba(163,163,163,0.33) 0.5rem, transparent 0),
-    radial-gradient(circle at 50% 108%, rgba(170,170,170,0.35) 0.46rem, transparent 0),
-    radial-gradient(circle at 68% 111%, rgba(158,158,158,0.31) 0.48rem, transparent 0),
-    radial-gradient(circle at 82% 107%, rgba(165,165,165,0.34) 0.4rem, transparent 0);
-  background-size: 100% 200%;
-  animation: steam-rise 3.5s linear infinite;
-  mask-image: linear-gradient(to top, rgba(0,0,0,0.6) 8%, rgba(0,0,0,0.2) 35%, transparent 65%);
-  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.6) 8%, rgba(0,0,0,0.2) 35%, transparent 65%);
+  animation: diamond-breathe 3.2s ease-in-out infinite;
 }
 
 .post-item-title {
@@ -620,8 +579,8 @@ img {
   }
 }
 
-@keyframes steam-rise {
-  0%   { background-position-y: 100%; opacity: 0.45; }
-  50%  { opacity: 0.6; }
-  100% { background-position-y: 0%;   opacity: 0.25; }
+@keyframes diamond-breathe {
+  0%, 100% { transform: rotate(45deg) scale(1);   background: var(--panel); }
+  40%      { transform: rotate(45deg) scale(1.35); background: var(--accent); }
+  70%      { transform: rotate(45deg) scale(1.35); background: var(--accent); }
 }
