@@ -1,0 +1,15 @@
+/*
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+/*.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+/favicon.svg
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/_astro/*
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
