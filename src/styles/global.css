@@ -4,16 +4,16 @@
 :root {
   color-scheme: light;
   --ink: #30343a;
-  --muted: #69727d;
-  --line: #2f3a44;
-  --soft-line: #d9e0e7;
-  --paper: #a9d8f2;
+  --muted: #707070;
+  --line: #222222;
+  --soft-line: #d8d8d8;
+  --paper: #d7d7d7;
   --panel: #ffffff;
-  --accent: #2b8fcb;
-  --accent-soft: #e6f4fb;
-  --mark: #ccecff;
-  --code: #f5f9fc;
-  --code-line: #c9dce8;
+  --accent: #111111;
+  --accent-soft: #eeeeee;
+  --mark: #dedede;
+  --code: #f7f7f7;
+  --code-line: #d2d2d2;
 }
 
 ::view-transition-old(root),
@@ -65,7 +65,7 @@ img {
   margin: 10px 16px;
   background: var(--panel);
   border: 0;
-  border-top: 1px solid #8fc9e8;
+  border-top: 1px solid #bdbdbd;
   box-shadow: 0 0 0 1px rgba(47, 58, 68, 0.12);
 }
 
@@ -80,7 +80,7 @@ img {
 
 .site-title {
   display: inline-block;
-  color: #3b4148;
+  color: #2d2d2d;
   font-size: clamp(3rem, 8vw, 5.6rem);
   font-weight: 900;
   line-height: 0.95;
@@ -90,7 +90,7 @@ img {
 
 .site-subtitle {
   margin-top: 1.5rem;
-  color: #58616b;
+  color: #666666;
   font-size: 0.95rem;
   letter-spacing: 0.04em;
 }
@@ -98,10 +98,10 @@ img {
 .babel-subtitle {
   display: inline-block;
   position: relative;
-  color: #31536a;
+  color: #555555;
   font-style: italic;
   letter-spacing: 0.08em;
-  text-shadow: 0.08em 0.08em 0 var(--mark);
+  text-shadow: 0.08em 0.08em 0 #eeeeee;
 }
 
 .babel-subtitle::before,
@@ -111,7 +111,7 @@ img {
   width: 2.4rem;
   height: 1px;
   margin: 0 0.9rem 0.28rem;
-  background: linear-gradient(90deg, transparent, #8fc9e8, transparent);
+  background: linear-gradient(90deg, transparent, #888888, transparent);
 }
 
 .site-nav {
@@ -162,7 +162,7 @@ img {
 .site-title:hover,
 .post-item-title a:hover {
   color: var(--accent);
-  text-shadow: 0.05em 0.05em 0 var(--mark);
+  text-shadow: 0.05em 0.05em 0 #dcdcdc;
 }
 
 .site-nav a:hover,
@@ -260,8 +260,8 @@ img {
 }
 
 .post-item:hover {
-  border-bottom-color: #b7cfdf;
-  background: linear-gradient(90deg, rgba(230, 244, 251, 0.55), transparent 72%);
+  border-bottom-color: #bdbdbd;
+  background: linear-gradient(90deg, rgba(238, 238, 238, 0.72), transparent 72%);
 }
 
 .post-item:hover::before {
@@ -316,7 +316,7 @@ img {
 
 .sidebar-title {
   display: inline;
-  background: #dce5ec;
+  background: #dddddd;
   font-size: 1.8rem;
   font-weight: 900;
   line-height: 1.1;
@@ -433,7 +433,7 @@ img {
 .prose :not(pre) > code {
   border: 1px solid var(--soft-line);
   background: var(--accent-soft);
-  color: #166b9a;
+  color: #222222;
   padding: 0.08rem 0.34rem;
   font-family: "JetBrains Mono", "Cascadia Code", "Fira Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   font-size: 0.86em;
@@ -447,7 +447,7 @@ img {
   padding: 2.2rem 0 0.4rem;
   overflow-x: auto;
   background: transparent !important;
-  color: #2f3a44 !important;
+  color: #222222 !important;
   font-family: "JetBrains Mono", "Cascadia Code", "Fira Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   font-size: 0.91rem;
   font-weight: 750;
