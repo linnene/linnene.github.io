@@ -1,0 +1,58 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ArticleToc from '../components/ArticleToc.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
+import Mermaid from '../components/Mermaid.astro';
+import type { BlogEntry } from '../lib/blog';
+import { formatDate } from '../lib/blog';
+
+interface Props {
+  entry: BlogEntry;
+  headings: { depth: number; slug: string; text: string }[];
+  prev?: BlogEntry;
+  next?: BlogEntry;
+}
+
+const { entry, headings, prev, next } = Astro.props;
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description} headerTitle={entry.data.title} headerSubtitle={entry.data.description}>
+  <div
+    class="content-grid article-grid"
+    style="grid-template-columns: 160px minmax(760px, 1fr) 190px; gap: 1.25rem; max-width: 1280px;"
+  >
+    <ArticleToc headings={headings} />
+
+    <article class="main-column article-column" style="border-left: 0; padding-left: 0.5rem;">
+      <header class="article-headline">
+        <div class="article-meta">
+          <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+        </div>
+      </header>
+
+      <div class="prose" data-pagefind-body>
+        <slot />
+      </div>
+
+      {(prev || next) && (
+        <nav class="post-list" aria-label="前后文章">
+          {prev && (
+            <article class="post-item">
+              <p class="post-item-meta">上一篇</p>
+              <h2 class="post-item-title"><a href={`/blog/${prev.id}/`}>{prev.data.title}</a></h2>
+            </article>
+          )}
+          {next && (
+            <article class="post-item">
+              <p class="post-item-meta">下一篇</p>
+              <h2 class="post-item-title"><a href={`/blog/${next.id}/`}>{next.data.title}</a></h2>
+            </article>
+          )}
+        </nav>
+      )}
+    </article>
+
+    <BlogSidebar />
+  </div>
+  <Mermaid />
+</BaseLayout>

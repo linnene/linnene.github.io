@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { publishedPosts, sortByDate } from '../lib/blog';
+import { site } from '../site.config';
+
+const posts = sortByDate(publishedPosts(await getCollection('blog')));
+const recentPosts = posts.slice(0, 5);
+---
+
+<BaseLayout
+  title="Home"
+  headerTitle={site.homeTitle}
+  headerSubtitle={site.homeSubtitle}
+  subtitleClass="babel-subtitle"
+>
+  <div class="content-grid">
+    <section class="main-column">
+      <section class="intro-block">
+        <h1 class="page-title">最近更新</h1>
+        <p class="page-lead">
+          这里不只记录学习。技术笔记、项目复盘、阅读摘录、工具折腾、生活里的观察都会放在这里。
+          目前先把写作和阅读体验做好，内容结构之后再慢慢长出来。
+        </p>
+      </section>
+
+      <div class="post-list">
+        {recentPosts.length > 0 ? (
+          recentPosts.map((entry) => <ArticleCard entry={entry} />)
+        ) : (
+          <p class="empty-state">还没有发布文章。第一篇 MDX 放进 <code>src/content/blog/</code> 后会自动出现在这里。</p>
+        )}
+      </div>
+    </section>
+
+    <BlogSidebar />
+  </div>
+</BaseLayout>

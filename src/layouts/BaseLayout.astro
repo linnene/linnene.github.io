@@ -1,0 +1,115 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { site } from '../site.config';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  headerTitle?: string;
+  headerSubtitle?: string;
+  titleClass?: string;
+  subtitleClass?: string;
+}
+
+const {
+  title = 'Home',
+  description = site.description,
+  headerTitle = title,
+  headerSubtitle = site.defaultSubtitle,
+  titleClass = '',
+  subtitleClass = '',
+} = Astro.props;
+const pageTitle = title === 'Home' ? site.title : `${title} - ${site.title}`;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{pageTitle}</title>
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header" transition:name="site-header">
+        <a href="/" class:list={['site-title', titleClass]}>{headerTitle}</a>
+        <p class:list={['site-subtitle', subtitleClass]}>{headerSubtitle}</p>
+      </header>
+
+      <nav class="site-nav" aria-label="主导航">
+        <div class="site-nav-inner">
+          {site.nav.map(([label, href]) => (
+            <a href={href}>{label}</a>
+          ))}
+        </div>
+      </nav>
+
+      <main transition:animate="fade">
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <nav class="footer-nav" aria-label="底部导航">
+          {site.nav.map(([label, href]) => (
+            <a href={href}>{label}</a>
+          ))}
+        </nav>
+        <p>© 2026 {site.title}. Powered by Astro, MDX, KaTeX and GitHub Pages.</p>
+      </footer>
+    </div>
+
+    <script>
+      function setupCodeCopy() {
+        document.querySelectorAll('pre[data-language]').forEach((pre) => {
+          if (pre.querySelector('.copy-code-button')) return;
+
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'copy-code-button';
+          button.textContent = 'COPY';
+          button.setAttribute('aria-label', '复制代码');
+
+          button.addEventListener('click', async () => {
+            const code = pre.querySelector('code')?.textContent ?? '';
+            try {
+              if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(code);
+              } else {
+                throw new Error('Clipboard API unavailable');
+              }
+              button.textContent = 'COPIED';
+              window.setTimeout(() => {
+                button.textContent = 'COPY';
+              }, 1300);
+            } catch {
+              const textarea = document.createElement('textarea');
+              textarea.value = code;
+              textarea.setAttribute('readonly', '');
+              textarea.style.position = 'fixed';
+              textarea.style.left = '-9999px';
+              document.body.append(textarea);
+              textarea.select();
+              const copied = Boolean(new Function('return document.execCommand("copy")')());
+              textarea.remove();
+              button.textContent = copied ? 'COPIED' : 'FAILED';
+              window.setTimeout(() => {
+                button.textContent = 'COPY';
+              }, 1300);
+            }
+          });
+
+          pre.append(button);
+        });
+      }
+
+      document.addEventListener('astro:page-load', setupCodeCopy);
+      setupCodeCopy();
+    </script>
+  </body>
+</html>

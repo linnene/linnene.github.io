@@ -1,0 +1,32 @@
+{
+  "name": "my-blog-web",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro sync && astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "check": "astro check",
+    "validate": "npm run check && npm run build",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.2",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.4.4",
+    "pagefind": "^1.5.2",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-katex": "^7.0.1",
+    "rehype-slug": "^6.0.0",
+    "remark-math": "^6.0.0",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@types/node": "^25.9.2",
+    "typescript": "^6.0.3"
+  }
+}

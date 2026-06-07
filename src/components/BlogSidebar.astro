@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import { getArchiveMonths, publishedPosts, sortByDate } from '../lib/blog';
+import { site } from '../site.config';
+
+const posts = sortByDate(publishedPosts(await getCollection('blog')));
+const archiveMonths = getArchiveMonths(posts);
+---
+
+<aside class="sidebar">
+  <section class="sidebar-section">
+    <h2 class="sidebar-title">Links</h2>
+    <ul class="sidebar-list">
+      {site.nav.filter(([label]) => label !== 'Home').map(([label, href]) => (
+        <li><a href={href}>{label}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="sidebar-section">
+    <h2 class="sidebar-title">Archives</h2>
+    <ul class="sidebar-list">
+      {archiveMonths.length > 0 ? (
+        archiveMonths.map(([id, archive]) => (
+          <li><a href={`/blog/#${id}`}>{archive.label} ({archive.count})</a></li>
+        ))
+      ) : (
+        <li class="muted-item">No posts yet</li>
+      )}
+    </ul>
+  </section>
+</aside>

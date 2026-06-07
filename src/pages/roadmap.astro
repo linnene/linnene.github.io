@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
+
+const steps = [
+  ['数学', '线性代数、概率论、优化和随机过程。目标是把公式推导、模型假设和论文里的符号体系读顺。'],
+  ['深度学习', '从基础网络、反向传播、表示学习到 Transformer。重点记录实现细节、训练现象和调参经验。'],
+  ['强化学习', 'MDP、动态规划、Q-learning、策略梯度、Actor-Critic、离线 RL。每个主题都尽量配实验验证。'],
+  ['工程复现', '整理论文复现、训练脚手架、评估指标、失败实验和复盘。把想法转成可复用的研发资产。'],
+];
+---
+
+<BaseLayout
+  title="Roadmap"
+  description="阶段性路线图。"
+  headerTitle="Roadmap"
+  headerSubtitle="阶段性目标和长期方向，不代表整个博客的全部内容。"
+>
+  <div class="content-grid">
+    <section class="main-column">
+      {steps.map(([title, detail]) => (
+        <section class="plain-section">
+          <h2>{title}</h2>
+          <p>{detail}</p>
+        </section>
+      ))}
+    </section>
+
+    <BlogSidebar />
+  </div>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+import type { BlogEntry } from '../lib/blog';
+import { formatDate } from '../lib/blog';
+
+interface Props {
+  entry: BlogEntry;
+}
+
+const { entry } = Astro.props;
+---
+
+<article class="post-item">
+  <h2 class="post-item-title">
+    <a href={`/blog/${entry.id}/`}>{entry.data.title}</a>
+  </h2>
+  <div class="post-item-meta">
+    <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+  </div>
+  <p class="post-item-desc">{entry.data.description}</p>
+</article>
