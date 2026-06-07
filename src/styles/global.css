@@ -58,12 +58,19 @@ img {
 
 .page-shell {
   min-height: 100vh;
-  width: calc(100% - 84px);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   max-width: none;
-  margin: 10px 42px;
+  margin: 0;
   background: var(--panel);
-  border: 8px solid #8fc9e8;
+  border: 0;
+  border-top: 2px solid #8fc9e8;
   box-shadow: 0 0 0 1px rgba(47, 58, 68, 0.12);
+}
+
+.page-shell > main {
+  flex: 1;
 }
 
 .site-header {
@@ -533,7 +540,6 @@ img {
   .page-shell {
     width: 100%;
     margin: 0;
-    border-width: 6px;
   }
 
   .site-header {
