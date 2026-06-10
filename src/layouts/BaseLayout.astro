@@ -124,10 +124,11 @@ const pageTitle = title === 'Home' ? site.title : `${title} - ${site.title}`;
       function setupTiltCards() {
         const CARDS = document.querySelectorAll('.post-item');
         const RANGE = 14;
-        const HALF = RANGE / 2;
 
         CARDS.forEach((card) => {
           card.addEventListener('mousemove', (e) => {
+            if (!(card instanceof HTMLElement) || !(e instanceof MouseEvent)) return;
+
             const r = card.getBoundingClientRect();
             const ry = ((e.clientX - r.left) / r.width - 0.5) * RANGE;
             const rx = ((e.clientY - r.top) / r.height - 0.5) * -RANGE;
@@ -136,6 +137,8 @@ const pageTitle = title === 'Home' ? site.title : `${title} - ${site.title}`;
           });
 
           card.addEventListener('mouseleave', () => {
+            if (!(card instanceof HTMLElement)) return;
+
             card.style.transition = 'transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
             card.style.transform = 'perspective(600px) rotateX(0) rotateY(0)';
           });
