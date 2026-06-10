@@ -1,599 +1,347 @@
 ---
 const photoCards = [
+  { id: 'xiamen',    title: '厦门',     caption: '鼓浪屿 / 2025', cities: [{ name: '厦门',     coords: [118.08, 24.48] }], photos: [{ src: '/images/photography/xiamen/cover.jpg',            label: '厦门'     }] },
+  { id: 'siguniang', title: '四姑娘山', caption: '川西 / 待整理', cities: [{ name: '四姑娘山', coords: [102.90, 31.10] }], photos: [{ src: '/images/photography/siguniang-mountain/cover.jpg', label: '四姑娘山' }] },
+  { id: 'chongqing', title: '重庆',     caption: '山城 / 待整理', cities: [{ name: '重庆',     coords: [106.55, 29.56] }], photos: [{ src: '/images/photography/chongqing/cover.jpg',        label: '重庆'     }] },
+  { id: 'shanghai',  title: '上海',     caption: '城市 / 待整理', cities: [{ name: '上海',     coords: [121.47, 31.23] }], photos: [{ src: '/images/photography/shanghai/cover.jpg',          label: '上海'     }] },
+  { id: 'guangzhou', title: '广州',     caption: '岭南 / 待整理', cities: [{ name: '广州',     coords: [113.26, 23.13] }], photos: [{ src: '/images/photography/guangzhou/cover.jpg',         label: '广州'     }] },
+  { id: 'guiyang',   title: '贵阳',     caption: '黔中 / 待整理', cities: [{ name: '贵阳',     coords: [106.63, 26.65] }], photos: [{ src: '/images/photography/guiyang/cover.jpg',           label: '贵阳'     }] },
   {
-    id: 'xiamen',
-    title: '厦门',
-    caption: '鼓浪屿 / 2025',
-    placement: 'right-top',
-    cities: [{ name: '厦门', coords: [118.08, 24.48] }],
-    photos: [{ src: '/images/photography/xiamen/cover.jpg', label: '厦门' }],
-  },
-  {
-    id: 'siguniang-mountain',
-    title: '四姑娘山',
-    caption: '川西 / 待整理',
-    placement: 'left-top',
-    cities: [{ name: '四姑娘山', coords: [102.9, 31.1] }],
-    photos: [{ src: '/images/photography/siguniang-mountain/cover.jpg', label: '四姑娘山' }],
-  },
-  {
-    id: 'chongqing',
-    title: '重庆',
-    caption: '山城 / 待整理',
-    placement: 'left-mid',
-    cities: [{ name: '重庆', coords: [106.55, 29.56] }],
-    photos: [{ src: '/images/photography/chongqing/cover.jpg', label: '重庆' }],
-  },
-  {
-    id: 'shanghai',
-    title: '上海',
-    caption: '城市 / 待整理',
-    placement: 'right-mid',
-    cities: [{ name: '上海', coords: [121.47, 31.23] }],
-    photos: [{ src: '/images/photography/shanghai/cover.jpg', label: '上海' }],
-  },
-  {
-    id: 'guangzhou',
-    title: '广州',
-    caption: '岭南 / 待整理',
-    placement: 'bottom-mid',
-    cities: [{ name: '广州', coords: [113.26, 23.13] }],
-    photos: [{ src: '/images/photography/guangzhou/cover.jpg', label: '广州' }],
-  },
-  {
-    id: 'guiyang',
-    title: '贵阳',
-    caption: '黔中 / 待整理',
-    placement: 'left-bottom',
-    cities: [{ name: '贵阳', coords: [106.63, 26.65] }],
-    photos: [{ src: '/images/photography/guiyang/cover.jpg', label: '贵阳' }],
-  },
-  {
-    id: 'yunnan',
-    title: '云南',
-    caption: '滇西北 / 待整理',
-    placement: 'bottom-left',
+    id: 'yunnan', title: '云南', caption: '滇西北 / 待整理',
     cities: [
-      { name: '丽江', coords: [100.23, 26.86], labelPosition: 'right', labelDistance: 12, compactLabel: true },
-      { name: '大理', coords: [100.27, 25.61], labelPosition: 'bottom', labelDistance: 10, compactLabel: true },
-      { name: '香格里拉', coords: [99.71, 27.83], labelPosition: 'top', labelDistance: 12, compactLabel: true },
-      { name: '昆明', coords: [102.83, 24.88], labelPosition: 'right', labelDistance: 14, compactLabel: true },
-      { name: '德钦', coords: [98.91, 28.49], labelPosition: 'left', labelDistance: 12, compactLabel: true },
+      { name: '丽江', coords: [100.23, 26.86] }, { name: '大理', coords: [100.27, 25.61] },
+      { name: '香格里拉', coords: [99.71, 27.83] }, { name: '昆明', coords: [102.83, 24.88] }, { name: '德钦', coords: [98.91, 28.49] },
     ],
     photos: [
-      { src: '/images/photography/yunnan/lijiang-cover.jpg', label: '丽江' },
-      { src: '/images/photography/yunnan/dali-cover.jpg', label: '大理' },
-      { src: '/images/photography/yunnan/shangri-la-cover.jpg', label: '香格里拉' },
-      { src: '/images/photography/yunnan/kunming-cover.jpg', label: '昆明' },
+      { src: '/images/photography/yunnan/lijiang-cover.jpg', label: '丽江' }, { src: '/images/photography/yunnan/dali-cover.jpg', label: '大理' },
+      { src: '/images/photography/yunnan/shangri-la-cover.jpg', label: '香格里拉' }, { src: '/images/photography/yunnan/kunming-cover.jpg', label: '昆明' },
       { src: '/images/photography/yunnan/deqin-cover.jpg', label: '德钦' },
     ],
   },
 ];
-
-const visited = photoCards.flatMap((card) =>
-  card.cities.map((city) => ({
-    ...city,
-    cardId: card.id,
-  }))
-);
-const firstCard = photoCards[0];
+const allVisited = photoCards.flatMap(c => c.cities);
+const firstCard  = photoCards[0];
 const firstPhoto = firstCard.photos[0];
 ---
 
 <section class="photo-map-section" aria-label="摄影地图">
-  <div class="map-shell" data-cities={JSON.stringify(visited)}>
-    <div class="map-main">
+  <div class="map-shell" id="map-shell">
+    <div class="map-main" id="map-main">
       <div id="china-map"></div>
-      <svg class="map-connector" aria-hidden="true"></svg>
     </div>
+    <svg class="connector-svg" id="connector-svg" aria-hidden="true"></svg>
 
-    <aside class="photo-panel" aria-label="城市代表照片">
-      {photoCards.map((card) => (
-        <button
-          class={`photo-frame photo-frame--${card.placement} ${card.photos.length > 1 ? 'photo-frame--stacked' : ''}`}
-          type="button"
-          aria-label={`查看 ${card.title} 原图`}
-          data-card-id={card.id}
-          data-city={card.title}
-          data-photo={card.photos[0].src}
-          data-caption={card.caption}
-        >
-          <span class="photo-stack" aria-hidden={card.photos.length === 1 ? undefined : 'true'}>
-            {card.photos.slice(0, 3).map((photo, index) => (
-              <span class={`photo-print photo-print--${index + 1}`}>
-                <img class="photo-img" src={photo.src} alt={`${photo.label} 代表照片`} loading="lazy" />
-                <span class="photo-missing" hidden>
-                  <span>PHOTO</span>
-                  <small>{photo.label}</small>
-                </span>
-              </span>
-            ))}
-          </span>
-          {card.photos.length > 3 && (
-            <span class="photo-count" aria-hidden="true">+{card.photos.length - 3}</span>
-          )}
-          <span class="photo-note">
-            <strong>{card.title}</strong>
-            <span>
-              {card.photos.length > 1 ? `${card.photos.map((photo) => photo.label).join(' / ')}` : card.caption}
-            </span>
-          </span>
-          <span class="photo-anchor photo-anchor--top" aria-hidden="true"></span>
-          <span class="photo-anchor photo-anchor--right" aria-hidden="true"></span>
-          <span class="photo-anchor photo-anchor--bottom" aria-hidden="true"></span>
-          <span class="photo-anchor photo-anchor--left" aria-hidden="true"></span>
-        </button>
-      ))}
-    </aside>
+    {photoCards.map((card) => (
+      <button
+        class="photo-card"
+        id={`card-${card.id}`}
+        type="button"
+        aria-label={`${card.title} — ${card.caption}`}
+        data-card-id={card.id}
+        data-caption={card.caption}
+        data-photos={JSON.stringify(card.photos)}
+        data-cities={JSON.stringify(card.cities)}
+      >
+        <div class={`photo-stack ${card.photos.length > 1 ? 'is-stack' : ''}`}>
+          {card.photos.slice(0, card.photos.length > 1 ? 3 : 1).map((p, i) => (
+            <div class="photo-layer" style={`--stack:${i}`}>
+              <img class="photo-img" src={p.src} alt={p.label} loading="lazy" />
+              <span class="photo-fallback" hidden>{p.label}</span>
+            </div>
+          ))}
+        </div>
+        <div class="photo-info">
+          <strong>{card.title}</strong>
+          <span>{card.caption}</span>
+        </div>
+      </button>
+    ))}
   </div>
 
-  <div class="photo-lightbox" aria-hidden="true">
-    <button class="photo-lightbox-close" type="button" aria-label="关闭原图">×</button>
-    <img src={firstPhoto.src} alt={`${firstCard.title} 原图`} />
-    <p>{firstCard.title} · {firstCard.caption}</p>
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="关闭">×</button>
+    <img id="lightbox-img" src="" alt="" />
+    <p id="lightbox-caption"></p>
   </div>
 </section>
 
-<script is:inline data-astro-rerun>
-  // @ts-nocheck
+<span hidden data-all-cities={JSON.stringify(allVisited)}></span>
+
+<script>
   (function () {
     const ECHARTS_CDN = 'https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js';
-    const GEO_CDN = 'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json';
+    const GEO_CDN     = 'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json';
+    const DRAG_DEAD   = 3;
 
+    const section   = document.querySelector('.photo-map-section');
+    const shell     = document.getElementById('map-shell');
+    const mapMain   = document.getElementById('map-main');
+    const mapNode   = document.getElementById('china-map');
+    const svg       = document.getElementById('connector-svg');
+    const cards     = Array.from(shell.querySelectorAll('.photo-card'));
+
+    const lightbox      = document.getElementById('lightbox');
+    const lightboxImg   = document.getElementById('lightbox-img');
+    const lightboxCap   = document.getElementById('lightbox-caption');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    let chart = null;
+    let drag  = null; // { card, sx, sy, ol, ot, moved }
+
+    /* ── utils ── */
+    function sr() { return shell.getBoundingClientRect(); }
+    function mr() { return mapMain.getBoundingClientRect(); }
+
+    /* nearest point on rect boundary */
+    function nearestEdge(px, py, rect) {
+      const cx = Math.max(rect.left, Math.min(px, rect.right));
+      const cy = Math.max(rect.top,  Math.min(py, rect.bottom));
+      return { x: cx, y: cy };
+    }
+
+    /* card rect in shell coords */
+    function cardShellRect(card) {
+      const r = card.getBoundingClientRect();
+      const s = sr();
+      return { left: r.left - s.left, top: r.top - s.top, right: r.right - s.left, bottom: r.bottom - s.top };
+    }
+
+    /* ── ECharts ── */
     function loadScript(src) {
       if (window.echarts) return Promise.resolve();
-      if (window.__photoMapEchartsPromise) return window.__photoMapEchartsPromise;
-
-      window.__photoMapEchartsPromise = new Promise((resolve, reject) => {
-        const existing = document.querySelector(`script[src="${src}"]`);
-        if (existing) {
-          existing.remove();
-        }
-
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = () => resolve();
-        script.onerror = () => {
-          window.__photoMapEchartsPromise = null;
-          reject(new Error('Failed to load ECharts'));
-        };
-        document.head.appendChild(script);
+      if (window.__echLoad) return window.__echLoad;
+      window.__echLoad = new Promise((resolve, reject) => {
+        const s = document.createElement('script'); s.src = src;
+        s.onload = resolve; s.onerror = () => { window.__echLoad = null; reject(); };
+        document.head.appendChild(s);
       });
-
-      return window.__photoMapEchartsPromise;
+      return window.__echLoad;
     }
 
-    function setupLightbox(section) {
-      const frames = section.querySelectorAll('.photo-frame');
-      const lightbox = section.querySelector('.photo-lightbox');
-      const lightboxClose = section.querySelector('.photo-lightbox-close');
-      const lightboxImg = lightbox?.querySelector('img');
-      const lightboxCaption = lightbox?.querySelector('p');
-
-      section.querySelectorAll('.photo-img').forEach((photo) => {
-        const fallback = photo.parentElement?.querySelector('.photo-missing');
-        if (!fallback || photo.dataset.fallbackReady) return;
-        photo.dataset.fallbackReady = 'true';
-        photo.addEventListener('error', () => {
-          photo.hidden = true;
-          fallback.hidden = false;
-        });
+    function initChart(echarts, geo) {
+      echarts.registerMap('china', geo);
+      chart = echarts.init(mapNode);
+      chart.setOption({
+        backgroundColor: 'transparent', animationDuration: 700,
+        geo: {
+          map: 'china', roam: false, zoom: 1.18, center: [105, 34], aspectScale: 0.85,
+          itemStyle: { areaColor: '#eeeeee', borderColor: '#c8c8c8', borderWidth: 0.6 },
+          emphasis: { itemStyle: { areaColor: '#e4e4e4' }, label: { show: false } },
+        },
+        series: [{
+          type: 'effectScatter', coordinateSystem: 'geo',
+          data: allVisited.map(c => ({
+            name: c.name, value: c.coords,
+            label: { position: c.labelPosition || 'right', distance: c.labelDistance || 8, fontSize: c.compactLabel ? 13 : 18 },
+          })),
+          symbol: 'circle', symbolSize: 8,
+          rippleEffect: { brushType: 'stroke', scale: 3.5, period: 3.2, color: '#111111' },
+          itemStyle: { color: '#111111', borderColor: '#ffffff', borderWidth: 2 },
+          label: { show: true, position: 'right', distance: 8, color: '#30343a', fontSize: 18, fontWeight: 900, fontFamily: 'Georgia, serif', formatter: '{b}' },
+          labelLayout: { hideOverlap: true },
+        }],
       });
+      setTimeout(() => { positionCards(); drawConnectors(); }, 150);
+      chart.on('finished', () => { drawConnectors(); });
+    }
 
-      if (!frames.length || !lightbox || !lightboxClose || !lightboxImg || !lightboxCaption) return;
+    /* ── connectors ── */
+    function drawConnectors() {
+      if (!chart) return;
+      const S = sr(), M = mr();
+      svg.setAttribute('viewBox', `0 0 ${S.width} ${S.height}`);
+      svg.style.width  = S.width + 'px';
+      svg.style.height = S.height + 'px';
 
-      const close = () => {
-        lightbox.classList.remove('is-open');
-        lightbox.setAttribute('aria-hidden', 'true');
+      let html = '';
+      cards.forEach(card => {
+        const cities = JSON.parse(card.dataset.cities || '[]');
+        if (!cities.length) return;
+        const cRect = cardShellRect(card);
+
+        // centroid of cities in shell coords
+        let cx = 0, cy = 0;
+        cities.forEach(c => { cx += c.coords[0]; cy += c.coords[1]; });
+        const pixel = chart.convertToPixel({ geoIndex: 0 }, [cx / cities.length, cy / cities.length]);
+        if (!pixel) return;
+        const sx = pixel[0] + (M.left - S.left);
+        const sy = pixel[1] + (M.top  - S.top);
+
+        // nearest edge midpoint
+        const midpoints = [
+          { x: (cRect.left + cRect.right) / 2, y: cRect.top },      // top
+          { x: cRect.right,                     y: (cRect.top + cRect.bottom) / 2 }, // right
+          { x: (cRect.left + cRect.right) / 2, y: cRect.bottom },   // bottom
+          { x: cRect.left,                      y: (cRect.top + cRect.bottom) / 2 }, // left
+        ];
+        let best = midpoints[0], bestD = Infinity;
+        midpoints.forEach(m => { const d = Math.hypot(m.x - sx, m.y - sy); if (d < bestD) { bestD = d; best = m; } });
+        const ex = best.x, ey = best.y;
+
+        // bezier
+        const dx = ex - sx, pull = Math.sign(dx || 1) * Math.max(80, Math.abs(dx));
+        const c1x = sx + pull * 0.35, c1y = sy - 24;
+        const c2x = ex - pull * 0.2,  c2y = ey + 10;
+
+        html += `<path d="M${sx} ${sy} C${c1x} ${c1y},${c2x} ${c2y},${ex} ${ey}" fill="none" stroke="#222" stroke-width="1.2" />`;
+        html += `<circle cx="${sx}" cy="${sy}" r="3.5" fill="#111" stroke="#fff" stroke-width="2" />`;
+        html += `<circle cx="${ex}" cy="${ey}" r="3"   fill="#111" stroke="#fff" stroke-width="2" />`;
+      });
+      svg.innerHTML = html;
+    }
+
+    /* ── position cards ── */
+    function positionCards() {
+      if (window.matchMedia('(max-width: 860px)').matches) return;
+      const S = sr(), M = mr();
+      const w = 162; // approximate card width
+      const h = 140; // approximate card height
+      const layout = {
+        xiamen:    { x: M.right  - w * 0.4, y: M.top    + h * 0.0 },
+        siguniang: { x: M.left   - w * 1.0, y: M.top    + h * 0.1 },
+        chongqing: { x: M.left   - w * 1.0, y: M.top    + h * 1.5 },
+        shanghai:  { x: M.right  - w * 0.4, y: M.top    + h * 1.8 },
+        guangzhou: { x: M.right  - w * 1.6, y: M.bottom + h * 0.15 },
+        guiyang:   { x: M.left   - w * 0.8, y: M.bottom - h * 0.1 },
+        yunnan:    { x: M.left   - w * 0.8, y: M.bottom + h * 0.8 },
       };
 
-      frames.forEach((frame) => {
-        if (frame.dataset.lightboxReady) return;
-        frame.dataset.lightboxReady = 'true';
-        frame.addEventListener('click', () => {
-          if (frame.dataset.wasDragged === 'true') {
-            frame.dataset.wasDragged = 'false';
-            return;
-          }
+      cards.forEach(card => {
+        if (card.dataset.dragged === 'true') return;
+        const pos = layout[card.dataset.cardId];
+        if (!pos) return;
+        // clamp to shell
+        const left = Math.round(Math.max(4, Math.min(pos.x - S.left, S.width - w - 4)));
+        const top  = Math.round(Math.max(4, Math.min(pos.y - S.top,  S.height - h - 4)));
+        card.style.left = left + 'px';
+        card.style.top  = top  + 'px';
+      });
+    }
 
-          const name = frame.dataset.city || '';
-          const caption = frame.dataset.caption || '';
-          lightboxImg.src = frame.dataset.photo || '';
-          lightboxImg.alt = `${name} 原图`;
-          lightboxCaption.textContent = `${name} · ${caption}`;
+    /* ── drag ── */
+    function onDown(e) {
+      const card = e.target.closest('.photo-card');
+      if (!card || window.matchMedia('(max-width: 860px)').matches) return;
+      e.preventDefault();
+      card.setPointerCapture(e.pointerId);
+      card.classList.add('is-dragging');
+      const S = sr();
+      const r = card.getBoundingClientRect();
+      drag = {
+        card,
+        sx: e.clientX, sy: e.clientY,
+        ol: r.left - S.left, ot: r.top - S.top,
+        moved: false,
+      };
+    }
+
+    function onMove(e) {
+      if (!drag) return;
+      const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+      if (Math.abs(dx) + Math.abs(dy) > DRAG_DEAD) drag.moved = true;
+      if (!drag.moved) return;
+
+      drag.card.style.left = Math.round(drag.ol + dx) + 'px';
+      drag.card.style.top  = Math.round(drag.ot + dy) + 'px';
+      drag.card.dataset.dragged = 'true';
+      requestAnimationFrame(drawConnectors);
+    }
+
+    function onUp(e) {
+      if (!drag) return;
+      drag.card.classList.remove('is-dragging');
+      const moved = drag.moved;
+      drag = null;
+      if (!moved) {
+        // click → lightbox
+        const card = e.target.closest('.photo-card');
+        if (!card) return;
+        const photos  = JSON.parse(card.dataset.photos || '[]');
+        const caption = card.dataset.caption || '';
+        if (photos.length) {
+          lightboxImg.src = photos[0].src;
+          lightboxImg.alt = photos[0].label;
+          lightboxCap.textContent = (card.querySelector('strong')?.textContent || '') + ' · ' + caption;
           lightbox.classList.add('is-open');
           lightbox.setAttribute('aria-hidden', 'false');
-        });
-      });
-
-      if (!lightbox.dataset.closeReady) {
-        lightbox.dataset.closeReady = 'true';
-        lightboxClose.addEventListener('click', close);
-        lightbox.addEventListener('click', (event) => {
-          if (event.target === lightbox) close();
-        });
-
-        document.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape') close();
-        });
-      }
-    }
-
-    function setupDraggableFrames(section, onMove) {
-      if (section.dataset.dragReady === 'true') return;
-      section.dataset.dragReady = 'true';
-
-      const panel = section.querySelector('.photo-panel');
-      const frames = section.querySelectorAll('.photo-frame');
-      if (!panel || !frames.length) return;
-
-      frames.forEach((frame) => {
-        frame.addEventListener('pointerdown', (event) => {
-          if (window.matchMedia('(max-width: 860px)').matches) return;
-          if (event.button !== 0) return;
-
-          const panelRect = panel.getBoundingClientRect();
-          const frameRect = frame.getBoundingClientRect();
-          const startX = event.clientX;
-          const startY = event.clientY;
-          const startLeft = frameRect.left - panelRect.left;
-          const startTop = frameRect.top - panelRect.top;
-          let moved = false;
-
-          frame.setPointerCapture(event.pointerId);
-          frame.classList.add('is-dragging');
-
-          const move = (moveEvent) => {
-            const dx = moveEvent.clientX - startX;
-            const dy = moveEvent.clientY - startY;
-            if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
-
-            frame.style.left = `${Math.round(startLeft + dx)}px`;
-            frame.style.top = `${Math.round(startTop + dy)}px`;
-            frame.style.right = 'auto';
-            frame.style.bottom = 'auto';
-            frame.dataset.dragged = 'true';
-            window.requestAnimationFrame(onMove);
-          };
-
-          const up = (upEvent) => {
-            frame.releasePointerCapture(upEvent.pointerId);
-            frame.classList.remove('is-dragging');
-            frame.removeEventListener('pointermove', move);
-            frame.removeEventListener('pointerup', up);
-            frame.removeEventListener('pointercancel', up);
-
-            if (moved) {
-              frame.dataset.wasDragged = 'true';
-              window.setTimeout(() => {
-                frame.dataset.wasDragged = 'false';
-              }, 250);
-            }
-            window.requestAnimationFrame(() => {
-              window.requestAnimationFrame(onMove);
-            });
-          };
-
-          frame.addEventListener('pointermove', move);
-          frame.addEventListener('pointerup', up);
-          frame.addEventListener('pointercancel', up);
-        });
-      });
-    }
-
-    function drawConnectors(section, chart, cities) {
-      const mapNode = section.querySelector('#china-map');
-      const svg = section.querySelector('.map-connector');
-
-      if (!mapNode || !svg) return;
-
-      const mapRect = mapNode.getBoundingClientRect();
-      if (mapRect.width === 0 || mapRect.height === 0) return;
-
-      svg.setAttribute('viewBox', `0 0 ${mapRect.width} ${mapRect.height}`);
-      const fragment = document.createDocumentFragment();
-
-      const groupedCities = cities.reduce((groups, city) => {
-        const key = city.cardId || city.name;
-        if (!groups.has(key)) groups.set(key, []);
-        groups.get(key).push(city);
-        return groups;
-      }, new Map());
-
-      groupedCities.forEach((group, cardId) => {
-        const frame = section.querySelector(`.photo-frame[data-card-id="${cardId}"]`);
-        const pixels = group
-          .map((city) => chart.convertToPixel({ geoIndex: 0 }, city.coords))
-          .filter(Boolean);
-        if (!frame || !pixels.length) return;
-
-        const pixel = pixels.reduce(
-          (acc, item) => [acc[0] + item[0] / pixels.length, acc[1] + item[1] / pixels.length],
-          [0, 0]
-        );
-        const startX = pixel[0];
-        const startY = pixel[1];
-        const anchors = Array.from(frame.querySelectorAll('.photo-anchor'))
-          .map((anchor) => {
-            const rect = anchor.getBoundingClientRect();
-            const x = rect.left - mapRect.left + rect.width / 2;
-            const y = rect.top - mapRect.top + rect.height / 2;
-            return {
-              x,
-              y,
-              distance: Math.hypot(x - startX, y - startY),
-            };
-          })
-          .sort((a, b) => a.distance - b.distance);
-        const endpoint = anchors[0];
-        if (!endpoint) return;
-
-        const endX = endpoint.x;
-        const endY = endpoint.y;
-
-        const dx = endX - startX;
-        const curveX = Math.sign(dx || 1) * Math.max(80, Math.abs(dx));
-        const c1X = startX + curveX * 0.35;
-        const c1Y = startY - 26;
-        const c2X = endX - curveX * 0.2;
-        const c2Y = endY + 10;
-
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('class', 'map-connector-path');
-        path.setAttribute('d', `M ${startX} ${startY} C ${c1X} ${c1Y}, ${c2X} ${c2Y}, ${endX} ${endY}`);
-        path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', '#222222');
-        path.setAttribute('stroke-width', '1.15');
-        path.setAttribute('stroke-linecap', 'round');
-        path.setAttribute('vector-effect', 'non-scaling-stroke');
-
-        const startDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        startDot.setAttribute('class', 'map-connector-start');
-        startDot.setAttribute('r', group.length > 1 ? '4.6' : '3.3');
-        startDot.setAttribute('cx', String(startX));
-        startDot.setAttribute('cy', String(startY));
-        startDot.setAttribute('fill', '#111111');
-        startDot.setAttribute('stroke', '#ffffff');
-        startDot.setAttribute('stroke-width', '2');
-        startDot.setAttribute('vector-effect', 'non-scaling-stroke');
-
-        const endDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        endDot.setAttribute('class', 'map-connector-end');
-        endDot.setAttribute('r', '3');
-        endDot.setAttribute('cx', String(endX));
-        endDot.setAttribute('cy', String(endY));
-        endDot.setAttribute('fill', '#111111');
-        endDot.setAttribute('stroke', '#ffffff');
-        endDot.setAttribute('stroke-width', '2');
-        endDot.setAttribute('vector-effect', 'non-scaling-stroke');
-
-        fragment.append(path, startDot, endDot);
-      });
-
-      if (fragment.childNodes.length) {
-        svg.replaceChildren(fragment);
-      }
-    }
-
-    function positionPhotoFrames(section) {
-      if (window.matchMedia('(max-width: 860px)').matches) return;
-
-      const shell = section.querySelector('.map-shell');
-      const panel = section.querySelector('.photo-panel');
-      const mapNode = section.querySelector('#china-map');
-      const frames = section.querySelectorAll('.photo-frame');
-      if (!shell || !panel || !mapNode || !frames.length) return;
-
-      const panelRect = panel.getBoundingClientRect();
-      const mapRect = mapNode.getBoundingClientRect();
-      const gap = 22;
-      const mapLeft = mapRect.left - panelRect.left;
-      const mapTop = mapRect.top - panelRect.top;
-      const mapRight = mapRect.right - panelRect.left;
-      const mapBottom = mapRect.bottom - panelRect.top;
-      const mapWidth = mapRect.width;
-      const mapHeight = mapRect.height;
-
-      frames.forEach((frame) => {
-        if (frame.dataset.dragged === 'true') return;
-
-        const rect = frame.getBoundingClientRect();
-        const placement = Array.from(frame.classList)
-          .find((name) => name.startsWith('photo-frame--') && name !== 'photo-frame--stacked')
-          ?.replace('photo-frame--', '');
-
-        let left = mapLeft + mapWidth * 0.5 - rect.width * 0.5;
-        let top = mapTop + mapHeight * 0.5 - rect.height * 0.5;
-
-        if (placement === 'left-top') {
-          left = mapLeft - rect.width - gap;
-          top = mapTop + mapHeight * 0.04;
-        } else if (placement === 'left-mid') {
-          left = mapLeft - rect.width - gap;
-          top = mapTop + mapHeight * 0.56 - rect.height * 0.5;
-        } else if (placement === 'right-top') {
-          left = mapRight + gap;
-          top = mapTop + mapHeight * 0.04;
-        } else if (placement === 'right-mid') {
-          left = mapRight + gap;
-          top = mapTop + mapHeight * 0.56 - rect.height * 0.5;
-        } else if (placement === 'left-bottom') {
-          left = mapLeft + mapWidth * 0.46;
-          top = mapBottom + gap;
-        } else if (placement === 'bottom-left') {
-          left = mapLeft + mapWidth * 0.2;
-          top = mapBottom + gap;
-        } else if (placement === 'bottom-mid') {
-          left = mapLeft + mapWidth * 0.72;
-          top = mapBottom + gap;
         }
-
-        frame.style.left = `${Math.round(left)}px`;
-        frame.style.top = `${Math.round(top)}px`;
-        frame.style.right = 'auto';
-        frame.style.bottom = 'auto';
-      });
-    }
-
-    function renderMap(section, echarts, geo, cities) {
-      const mapNode = section.querySelector('#china-map');
-      if (!mapNode || !cities.length) return;
-
-      const existing = echarts.getInstanceByDom(mapNode);
-      if (existing) existing.dispose();
-
-      echarts.registerMap('china', geo);
-      const chart = echarts.init(mapNode);
-      chart.setOption({
-        backgroundColor: 'transparent',
-        animationDuration: 700,
-        geo: {
-          map: 'china',
-          roam: false,
-          zoom: 1.32,
-          center: [105, 34],
-          aspectScale: 0.85,
-          itemStyle: {
-            areaColor: '#eeeeee',
-            borderColor: '#c8c8c8',
-            borderWidth: 0.6,
-          },
-          emphasis: {
-            itemStyle: {
-              areaColor: '#e4e4e4',
-            },
-            label: {
-              show: false,
-            },
-          },
-        },
-        series: [
-          {
-            type: 'effectScatter',
-            coordinateSystem: 'geo',
-            data: cities.map((city) => ({
-              name: city.name,
-              value: city.coords,
-              label: {
-                position: city.labelPosition || 'right',
-                distance: city.labelDistance || 8,
-                fontSize: city.compactLabel ? 13 : 18,
-              },
-            })),
-            symbol: 'circle',
-            symbolSize: 8,
-            rippleEffect: {
-              brushType: 'stroke',
-              scale: 3.5,
-              period: 3.2,
-              color: '#111111',
-            },
-            itemStyle: {
-              color: '#111111',
-              borderColor: '#ffffff',
-              borderWidth: 2,
-            },
-            label: {
-              show: true,
-              position: 'right',
-              distance: 8,
-              color: '#30343a',
-              fontSize: 18,
-              fontWeight: 900,
-              fontFamily: 'Georgia, "Times New Roman", "Noto Serif SC", serif',
-              formatter: '{b}',
-            },
-            labelLayout: {
-              hideOverlap: true,
-            },
-          },
-        ],
-      });
-
-      const sync = () => {
-        chart.resize();
-        window.requestAnimationFrame(() => {
-          positionPhotoFrames(section);
-          drawConnectors(section, chart, cities);
-        });
-      };
-
-      const redrawConnectors = () => {
-        chart.resize();
-        window.requestAnimationFrame(() => {
-          drawConnectors(section, chart, cities);
-        });
-      };
-
-      setupDraggableFrames(section, redrawConnectors);
-
-      window.requestAnimationFrame(sync);
-      window.setTimeout(sync, 120);
-      window.setTimeout(sync, 420);
-      window.setTimeout(sync, 900);
-      chart.off('finished');
-      chart.on('finished', sync);
-
-      if (section.__photoMapResize) {
-        window.removeEventListener('resize', section.__photoMapResize);
       }
-      section.__photoMapResize = sync;
-      window.addEventListener('resize', sync);
+      requestAnimationFrame(drawConnectors);
     }
 
-    async function initPhotographyMap() {
-      const section = document.querySelector('.photo-map-section');
-      if (!section) return;
+    /* ── lightbox ── */
+    lightboxClose.addEventListener('click', () => { lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true'); });
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) { lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true'); } });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true'); } });
 
-      const shell = section.querySelector('.map-shell');
-      const mapNode = section.querySelector('#china-map');
-      if (!shell || !mapNode) return;
+    /* ── image fallback ── */
+    cards.forEach(card => {
+      card.querySelectorAll('.photo-img').forEach(img => {
+        img.addEventListener('error', () => { img.hidden = true; img.nextElementSibling.hidden = false; });
+      });
+    });
 
-      setupLightbox(section);
+    /* ── events ── */
+    shell.addEventListener('pointerdown', onDown);
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
 
-      const cities = JSON.parse(shell.getAttribute('data-cities') || '[]');
-      if (!cities.length) return;
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (chart) chart.resize();
+        positionCards();
+        setTimeout(drawConnectors, 100);
+      }, 150);
+    });
 
+    document.addEventListener('astro:page-load', () => {
+      setTimeout(() => {
+        if (chart) chart.resize();
+        positionCards();
+        setTimeout(drawConnectors, 100);
+      }, 200);
+    });
+
+    /* ── boot ── */
+    async function boot() {
       try {
-        if (!window.echarts) await loadScript(ECHARTS_CDN);
-        if (!window.echarts) throw new Error('ECharts unavailable');
+        await loadScript(ECHARTS_CDN);
         const res = await fetch(GEO_CDN);
         const geo = await res.json();
-        renderMap(section, window.echarts, geo, cities);
+        initChart(window.echarts, geo);
       } catch {
         mapNode.classList.add('map-failed');
         mapNode.textContent = '地图加载失败';
       }
     }
 
-    document.addEventListener('astro:page-load', initPhotographyMap);
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initPhotographyMap, { once: true });
+      document.addEventListener('DOMContentLoaded', boot);
     } else {
-      initPhotographyMap();
+      boot();
     }
   })();
 </script>
 
 <style>
   .photo-map-section {
-    width: min(100%, 1500px);
-    margin: 0 auto;
-    padding: 1.5rem clamp(1rem, 2.2vw, 2rem) 3.5rem;
+    padding: 0;
+    height: calc(100vh - 8rem);
+    min-height: 560px;
   }
 
   .map-shell {
     position: relative;
-    min-height: 820px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 
   .map-main {
-    position: relative;
-    min-width: 0;
-    width: min(66vw, 980px);
-    height: min(62vh, 610px);
-    min-height: 500px;
-    margin: 5rem auto 9rem;
+    position: absolute;
+    inset: 1rem clamp(200px, 18vw, 280px) 1rem clamp(140px, 12vw, 200px);
   }
 
   #china-map {
@@ -602,363 +350,92 @@ const firstPhoto = firstCard.photos[0];
   }
 
   .map-failed {
-    display: grid;
-    place-items: center;
-    color: var(--muted);
-    border: 1px solid var(--soft-line);
+    display: grid; place-items: center; color: var(--muted); border: 1px solid var(--soft-line);
   }
 
-  .map-connector {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-    z-index: 3;
+  /* svg connector */
+  .connector-svg {
+    position: absolute; inset: 0;
+    pointer-events: none; z-index: 5;
   }
 
-  .map-connector-path {
-    fill: none;
-    stroke: #222222;
-    stroke-width: 1.15;
-    stroke-linecap: round;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .map-connector-start,
-  .map-connector-end {
-    fill: #111111;
-    stroke: #ffffff;
-    stroke-width: 2;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .photo-panel {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    pointer-events: none;
-  }
-
-  .photo-frame {
-    position: absolute;
-    display: block;
-    width: clamp(126px, 10.5vw, 172px);
-    transform: rotate(1.2deg);
-    background: #ffffff;
-    border: 1px solid #202020;
+  /* ── cards ── */
+  .photo-card {
+    position: absolute; z-index: 10;
+    width: 162px;
+    background: var(--panel); border: 1px solid #202020;
     padding: 0.55rem 0.55rem 0.45rem;
     box-shadow: 0.4rem 0.4rem 0 #d8d8d8;
-    cursor: grab;
-    text-align: left;
+    cursor: grab; text-align: left; user-select: none;
+    transform: rotate(1.2deg);
     transition: transform 160ms ease, box-shadow 160ms ease;
-    pointer-events: auto;
-    touch-action: none;
-    user-select: none;
   }
-
-  .photo-frame:hover {
+  .photo-card:hover {
     transform: rotate(0.5deg) translateY(-2px);
     box-shadow: 0.5rem 0.5rem 0 #cfcfcf;
   }
-
-  .photo-frame.is-dragging {
-    z-index: 20;
-    cursor: grabbing;
+  .photo-card.is-dragging {
+    z-index: 20; cursor: grabbing;
     transform: rotate(0deg) scale(1.02);
     box-shadow: 0.65rem 0.65rem 0 #c7c7c7;
     transition: box-shadow 120ms ease;
   }
 
-  .photo-anchor {
-    position: absolute;
-    width: 0.65rem;
-    height: 0.65rem;
-    border-radius: 999px;
-    opacity: 0;
-    pointer-events: none;
-  }
+  .photo-card img { -webkit-user-drag: none; }
 
-  .photo-anchor--top {
-    top: -0.325rem;
-    left: 50%;
-    transform: translateX(-50%);
+  /* stack */
+  .photo-stack { display: block; }
+  .photo-stack.is-stack { position: relative; }
+  .photo-layer {
+    display: block; aspect-ratio: 4/3;
+    background: #f5f5f5; overflow: hidden;
   }
-
-  .photo-anchor--right {
-    top: 50%;
-    right: -0.325rem;
-    transform: translateY(-50%);
+  .is-stack .photo-layer {
+    position: absolute; inset: 0;
+    transition: transform 180ms ease;
   }
+  .is-stack .photo-layer:nth-child(1) { position: relative; }
+  .is-stack:hover .photo-layer:nth-child(2) { transform: translate(6px, -6px); }
+  .is-stack:hover .photo-layer:nth-child(3) { transform: translate(12px, -12px); }
 
-  .photo-anchor--bottom {
-    bottom: -0.325rem;
-    left: 50%;
-    transform: translateX(-50%);
+  .photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(100%); }
+  .photo-fallback {
+    display: grid; place-items: center;
+    width: 100%; height: 100%;
+    color: #bbb; font-size: 0.75rem; font-weight: 700;
+    font-family: "JetBrains Mono", monospace; letter-spacing: 0.1em;
   }
-
-  .photo-anchor--left {
-    top: 50%;
-    left: -0.325rem;
-    transform: translateY(-50%);
+  .photo-info {
+    display: flex; justify-content: space-between; gap: 0.6rem;
+    margin-top: 0.45rem; font-size: 0.8rem; line-height: 1.25;
   }
+  .photo-info strong { font-size: 0.88rem; font-weight: 800; color: var(--ink); }
+  .photo-info span { color: var(--muted); text-align: right; }
 
-  .photo-frame--left-top {
-    top: 0;
-    left: 0;
-    transform: rotate(-2.2deg);
+  /* lightbox */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 50;
+    display: none; place-items: center;
+    background: rgba(255,255,255,0.92); padding: 2rem;
   }
-
-  .photo-frame--left-mid {
-    top: 34%;
-    left: 0;
-    transform: rotate(1.6deg);
-  }
-
-  .photo-frame--left-bottom {
-    bottom: -3rem;
-    left: 46%;
-    transform: rotate(-1.1deg);
-  }
-
-  .photo-frame--bottom-left {
-    bottom: -3rem;
-    left: 20%;
-    transform: rotate(2.1deg);
-  }
-
-  .photo-frame--right-top {
-    top: 0;
-    right: 0;
-    transform: rotate(1.3deg);
-  }
-
-  .photo-frame--right-mid {
-    top: 32%;
-    right: 0;
-    transform: rotate(-1.4deg);
-  }
-
-  .photo-frame--bottom-mid {
-    bottom: -3rem;
-    left: 72%;
-    right: auto;
-    transform: rotate(1.8deg);
-  }
-
-  .photo-frame--stacked {
-    z-index: 6;
-  }
-
-  .photo-frame--stacked:hover {
-    z-index: 8;
-  }
-
-  .photo-stack {
-    position: relative;
-    display: block;
-    aspect-ratio: 4 / 5;
-  }
-
-  .photo-print {
-    position: relative;
-    display: block;
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-    border: 1px solid var(--soft-line);
-    background:
-      linear-gradient(135deg, #f4f4f4, #e8e8e8),
-      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.04) 0 1px, transparent 1px 8px);
-  }
-
-  .photo-stack .photo-print {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
-  }
-
-  .photo-print--1 {
-    z-index: 3;
-  }
-
-  .photo-print--2 {
-    z-index: 2;
-    transform: translate(0.45rem, -0.35rem) rotate(3deg);
-    opacity: 0.95;
-  }
-
-  .photo-print--3 {
-    z-index: 1;
-    transform: translate(0.9rem, -0.7rem) rotate(6deg);
-    opacity: 0.9;
-  }
-
-  .photo-frame--stacked:hover .photo-print--1 {
-    transform: translate(-0.18rem, 0.25rem) rotate(-2deg);
-  }
-
-  .photo-frame--stacked:hover .photo-print--2 {
-    transform: translate(1rem, -0.6rem) rotate(5deg);
-  }
-
-  .photo-frame--stacked:hover .photo-print--3 {
-    transform: translate(1.85rem, -1.05rem) rotate(9deg);
-  }
-
-  .photo-count {
-    position: absolute;
-    top: 0.65rem;
-    right: 0.65rem;
-    z-index: 5;
-    min-width: 1.6rem;
-    padding: 0.1rem 0.35rem;
-    border: 1px solid #202020;
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--ink);
-    font-size: 0.72rem;
-    font-weight: 900;
-    text-align: center;
-  }
-
-  .photo-print img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(100%);
-  }
-
-  .photo-missing {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-content: center;
-    gap: 0.25rem;
-    color: #777777;
-    text-align: center;
-  }
-
-  .photo-missing span {
-    font-size: 1.15rem;
-    font-weight: 900;
-    letter-spacing: 0.16em;
-  }
-
-  .photo-missing small {
-    font-size: 0.78rem;
-  }
-
-  .photo-note {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.6rem;
-    margin-top: 0.45rem;
-    color: var(--ink);
-    font-size: 0.8rem;
-    line-height: 1.25;
-  }
-
-  .photo-note strong {
-    font-size: 0.9rem;
-  }
-
-  .photo-note span {
-    color: var(--muted);
-    text-align: right;
-    word-break: keep-all;
-  }
-
-  .photo-lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    display: none;
-    place-items: center;
-    background: rgba(255, 255, 255, 0.92);
-    padding: 2rem;
-  }
-
-  .photo-lightbox.is-open {
-    display: grid;
-  }
-
-  .photo-lightbox img {
-    max-width: min(92vw, 1200px);
-    max-height: 82vh;
-    object-fit: contain;
-    border: 1px solid #202020;
-    background: #ffffff;
+  .lightbox.is-open { display: grid; }
+  .lightbox img {
+    max-width: min(92vw, 1200px); max-height: 82vh; object-fit: contain;
+    border: 1px solid #202020; background: #fff;
     box-shadow: 0.55rem 0.55rem 0 #d8d8d8;
   }
-
-  .photo-lightbox p {
-    margin: 1rem 0 0;
-    color: var(--muted);
-    font-size: 0.95rem;
-  }
-
-  .photo-lightbox-close {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.5rem;
-    color: var(--ink);
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  @media (max-width: 1180px) {
-    .photo-frame {
-      width: clamp(112px, 13vw, 150px);
-    }
-
-    .photo-frame--left-top,
-    .photo-frame--left-mid {
-      left: 0;
-    }
-
-    .photo-frame--right-top,
-    .photo-frame--right-mid {
-      right: 0;
-    }
+  .lightbox p { margin: 1rem 0 0; color: var(--muted); font-size: 0.95rem; }
+  .lightbox-close {
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    color: var(--ink); font-size: 2rem; line-height: 1; cursor: pointer;
+    background: none; border: none;
   }
 
   @media (max-width: 860px) {
-    .photo-map-section {
-      padding: 1.2rem 1rem 2.5rem;
-    }
-
-    .map-shell {
-      min-height: auto;
-    }
-
-    .map-main {
-      height: 55vh;
-      min-height: 360px;
-    }
-
-    .map-connector {
-      display: none;
-    }
-
-    .photo-panel {
-      position: static;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      max-width: 360px;
-      margin: 0 auto;
-      margin-left: 0;
-      transform: none;
-      pointer-events: auto;
-    }
-
-    .photo-frame {
-      position: static;
-      width: 100%;
-      transform: rotate(0.8deg);
-    }
+    .photo-map-section { height: auto; min-height: auto; padding: 1rem; }
+    .map-shell { overflow: visible; display: flex; flex-direction: column; gap: 1rem; height: auto; }
+    .map-main { position: relative; inset: auto; height: 50vh; min-height: 360px; }
+    .connector-svg { display: none; }
+    .photo-card { position: static !important; left: auto !important; top: auto !important; width: 100%; max-width: 260px; transform: rotate(0.5deg); }
   }
 </style>
