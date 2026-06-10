@@ -4,7 +4,12 @@ import { existsSync } from 'node:fs';
 export type BlogEntry = CollectionEntry<'blog'>;
 
 export function sortByDate(entries: BlogEntry[]) {
-  return [...entries].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return [...entries].sort((a, b) => {
+    const aPinned = a.data.pinned ? 1 : 0;
+    const bPinned = b.data.pinned ? 1 : 0;
+    if (aPinned !== bPinned) return bPinned - aPinned;
+    return b.data.date.valueOf() - a.data.date.valueOf();
+  });
 }
 
 export function publishedPosts(entries: BlogEntry[]) {

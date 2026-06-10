@@ -1,0 +1,152 @@
+---
+const visited = [
+  { name: '厦门', coords: [118.08, 24.48] },
+];
+---
+
+<div class="map-wrapper">
+  <div id="china-map"></div>
+  <ul class="map-legend">
+    {visited.map((city) => (
+      <li>
+        <span class="legend-dot"></span>
+        {city.name}
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  (function () {
+    const MAP = document.getElementById('china-map');
+    if (!MAP) return;
+
+    const ECHARTS_CDN = 'https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js';
+    const GEO_CDN = 'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json';
+
+    function loadScript(src) {
+      return new Promise((resolve) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        document.head.appendChild(s);
+      });
+    }
+
+    function render(echarts, geo) {
+      echarts.registerMap('china', geo);
+
+      const chart = echarts.init(MAP);
+      chart.setOption({
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}',
+          backgroundColor: '#ffffff',
+          borderColor: '#222222',
+          textStyle: {
+            color: '#30343a',
+            fontFamily: 'Georgia, "Times New Roman", "Noto Serif SC", serif',
+          },
+        },
+        geo: {
+          map: 'china',
+          roam: false,
+          zoom: 1.18,
+          center: [104.5, 36],
+          aspectScale: 0.85,
+          itemStyle: {
+            areaColor: '#eeeeee',
+            borderColor: '#cccccc',
+            borderWidth: 0.5,
+          },
+          emphasis: {
+            disabled: true,
+          },
+        },
+        series: [
+          {
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            data: [
+              { name: '厦门', value: [118.08, 24.48] },
+            ],
+            symbol: 'circle',
+            symbolSize: 10,
+            itemStyle: {
+              color: '#111111',
+              borderColor: '#ffffff',
+              borderWidth: 2,
+            },
+            label: {
+              show: true,
+              position: 'right',
+              distance: 8,
+              color: '#30343a',
+              fontSize: 18,
+              fontWeight: 900,
+              fontFamily: 'Georgia, "Times New Roman", "Noto Serif SC", serif',
+              formatter: '{b}',
+            },
+          },
+        ],
+      });
+
+      window.addEventListener('resize', () => chart.resize());
+    }
+
+    async function init() {
+      if (!window.echarts) await loadScript(ECHARTS_CDN);
+      const res = await fetch(GEO_CDN);
+      const geo = await res.json();
+      render(window.echarts, geo);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+<style>
+  .map-wrapper {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1.5rem 0 0;
+  }
+
+  #china-map {
+    width: 100%;
+    height: 520px;
+  }
+
+  .map-legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.2rem;
+    padding: 0;
+    list-style: none;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .legend-dot {
+    display: inline-block;
+    width: 0.52rem;
+    height: 0.52rem;
+    margin-right: 0.4em;
+    background: var(--accent);
+    transform: rotate(45deg);
+    vertical-align: middle;
+  }
+
+  @media (max-width: 860px) {
+    #china-map {
+      height: 380px;
+    }
+  }
+</style>
