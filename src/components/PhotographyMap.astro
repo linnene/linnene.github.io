@@ -1,27 +1,67 @@
 ---
 const photoCards = [
-  { id: 'xiamen',    title: '厦门',     caption: '鼓浪屿 / 2025', cities: [{ name: '厦门',     coords: [118.08, 24.48] }], photos: [{ src: '/images/photography/xiamen/cover.jpg',            label: '厦门'     }] },
-  { id: 'siguniang', title: '四姑娘山', caption: '川西 / 待整理', cities: [{ name: '四姑娘山', coords: [102.90, 31.10] }], photos: [{ src: '/images/photography/siguniang-mountain/cover.jpg', label: '四姑娘山' }] },
-  { id: 'chongqing', title: '重庆',     caption: '山城 / 待整理', cities: [{ name: '重庆',     coords: [106.55, 29.56] }], photos: [{ src: '/images/photography/chongqing/cover.jpg',        label: '重庆'     }] },
-  { id: 'shanghai',  title: '上海',     caption: '城市 / 待整理', cities: [{ name: '上海',     coords: [121.47, 31.23] }], photos: [{ src: '/images/photography/shanghai/cover.jpg',          label: '上海'     }] },
-  { id: 'guangzhou', title: '广州',     caption: '岭南 / 待整理', cities: [{ name: '广州',     coords: [113.26, 23.13] }], photos: [{ src: '/images/photography/guangzhou/cover.jpg',         label: '广州'     }] },
-  { id: 'guiyang',   title: '贵阳',     caption: '黔中 / 待整理', cities: [{ name: '贵阳',     coords: [106.63, 26.65] }], photos: [{ src: '/images/photography/guiyang/cover.jpg',           label: '贵阳'     }] },
   {
-    id: 'yunnan', title: '云南', caption: '滇西北 / 待整理',
+    id: 'siguniang',
+    title: '四姑娘山',
+    caption: '川西 / 待整理',
+    cities: [{ name: '四姑娘山', coords: [102.9, 31.1] }],
+    photos: [{ src: '/images/photography/siguniang-mountain/cover.webp', label: '四姑娘山' }],
+  },
+  {
+    id: 'chongqing',
+    title: '重庆',
+    caption: '山城 / 待整理',
+    cities: [{ name: '重庆', coords: [106.55, 29.56] }],
+    photos: [{ src: '/images/photography/chongqing/cover.webp', label: '重庆' }],
+  },
+  {
+    id: 'shanghai',
+    title: '上海',
+    caption: '城市 / 待整理',
+    cities: [{ name: '上海', coords: [121.47, 31.23] }],
+    photos: [{ src: '/images/photography/shanghai/cover.webp', label: '上海' }],
+  },
+  {
+    id: 'xiamen',
+    title: '厦门',
+    caption: '鼓浪屿 / 2025',
+    cities: [{ name: '厦门', coords: [118.08, 24.48] }],
+    photos: [{ src: '/images/photography/xiamen/cover.webp', label: '厦门' }],
+  },
+  {
+    id: 'yunnan',
+    title: '云南',
+    caption: '滇西北 / 待整理',
     cities: [
-      { name: '丽江', coords: [100.23, 26.86] }, { name: '大理', coords: [100.27, 25.61] },
-      { name: '香格里拉', coords: [99.71, 27.83] }, { name: '昆明', coords: [102.83, 24.88] }, { name: '德钦', coords: [98.91, 28.49] },
+      { name: '丽江', coords: [100.23, 26.86], labelPosition: 'right', compactLabel: true },
+      { name: '大理', coords: [100.27, 25.61], labelPosition: 'bottom', compactLabel: true },
+      { name: '香格里拉', coords: [99.71, 27.83], labelPosition: 'top', compactLabel: true },
+      { name: '昆明', coords: [102.83, 24.88], labelPosition: 'right', compactLabel: true },
+      { name: '德钦', coords: [98.91, 28.49], labelPosition: 'left', compactLabel: true },
     ],
     photos: [
-      { src: '/images/photography/yunnan/lijiang-cover.jpg', label: '丽江' }, { src: '/images/photography/yunnan/dali-cover.jpg', label: '大理' },
-      { src: '/images/photography/yunnan/shangri-la-cover.jpg', label: '香格里拉' }, { src: '/images/photography/yunnan/kunming-cover.jpg', label: '昆明' },
-      { src: '/images/photography/yunnan/deqin-cover.jpg', label: '德钦' },
+      { src: '/images/photography/yunnan/lijiang-cover.webp', label: '丽江' },
+      { src: '/images/photography/yunnan/dali-cover.webp', label: '大理' },
+      { src: '/images/photography/yunnan/shangri-la-cover.webp', label: '香格里拉' },
     ],
   },
+  {
+    id: 'guiyang',
+    title: '贵阳',
+    caption: '黔中 / 待整理',
+    cities: [{ name: '贵阳', coords: [106.63, 26.65] }],
+    photos: [{ src: '/images/photography/guiyang/cover.webp', label: '贵阳' }],
+  },
+  {
+    id: 'guangzhou',
+    title: '广州',
+    caption: '岭南 / 待整理',
+    cities: [{ name: '广州', coords: [113.26, 23.13] }],
+    photos: [{ src: '/images/photography/guangzhou/cover.webp', label: '广州' }],
+  },
 ];
-const allVisited = photoCards.flatMap(c => c.cities);
-const firstCard  = photoCards[0];
-const firstPhoto = firstCard.photos[0];
+
+const allVisited = photoCards.flatMap((card) => card.cities);
 ---
 
 <section class="photo-map-section" aria-label="摄影地图">
@@ -36,17 +76,18 @@ const firstPhoto = firstCard.photos[0];
         class="photo-card"
         id={`card-${card.id}`}
         type="button"
-        aria-label={`${card.title} — ${card.caption}`}
+        aria-label={`${card.title} - ${card.caption}`}
         data-card-id={card.id}
+        data-title={card.title}
         data-caption={card.caption}
         data-photos={JSON.stringify(card.photos)}
         data-cities={JSON.stringify(card.cities)}
       >
         <div class={`photo-stack ${card.photos.length > 1 ? 'is-stack' : ''}`}>
-          {card.photos.slice(0, card.photos.length > 1 ? 3 : 1).map((p, i) => (
-            <div class="photo-layer" style={`--stack:${i}`}>
-              <img class="photo-img" src={p.src} alt={p.label} loading="lazy" />
-              <span class="photo-fallback" hidden>{p.label}</span>
+          {card.photos.slice(0, card.photos.length > 1 ? 3 : 1).map((photo, index) => (
+            <div class="photo-layer" style={`--stack:${index}`}>
+              <img class="photo-img" src={photo.src} alt={photo.label} loading="lazy" />
+              <span class="photo-fallback" hidden>{photo.label}</span>
             </div>
           ))}
         </div>
@@ -59,7 +100,7 @@ const firstPhoto = firstCard.photos[0];
   </div>
 
   <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="关闭">×</button>
+    <button class="lightbox-close" id="lightbox-close" aria-label="关闭">x</button>
     <img id="lightbox-img" src="" alt="" />
     <p id="lightbox-caption"></p>
   </div>
@@ -67,221 +108,292 @@ const firstPhoto = firstCard.photos[0];
 
 <span hidden data-all-cities={JSON.stringify(allVisited)}></span>
 
-<script>
-  (function () {
+<script is:inline data-astro-rerun>
+  (() => {
     const ECHARTS_CDN = 'https://cdn.jsdelivr.net/npm/echarts@5.6.0/dist/echarts.min.js';
-    const GEO_CDN     = 'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json';
-    const DRAG_DEAD   = 3;
+    const GEO_URLS = ['/maps/china.json', 'https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json'];
+    const DRAG_DEAD = 3;
 
-    const section   = document.querySelector('.photo-map-section');
-    const shell     = document.getElementById('map-shell');
-    const mapMain   = document.getElementById('map-main');
-    const mapNode   = document.getElementById('china-map');
-    const svg       = document.getElementById('connector-svg');
-    const cards     = Array.from(shell.querySelectorAll('.photo-card'));
+    const shell = document.getElementById('map-shell');
+    const mapMain = document.getElementById('map-main');
+    const mapNode = document.getElementById('china-map');
+    const svg = document.getElementById('connector-svg');
+    const cards = Array.from(shell.querySelectorAll('.photo-card'));
+    const visitedCities = JSON.parse(document.querySelector('[data-all-cities]')?.dataset.allCities || '[]');
 
-    const lightbox      = document.getElementById('lightbox');
-    const lightboxImg   = document.getElementById('lightbox-img');
-    const lightboxCap   = document.getElementById('lightbox-caption');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCap = document.getElementById('lightbox-caption');
     const lightboxClose = document.getElementById('lightbox-close');
 
     let chart = null;
-    let drag  = null; // { card, sx, sy, ol, ot, moved }
+    let drag = null;
 
-    /* ── utils ── */
-    function sr() { return shell.getBoundingClientRect(); }
-    function mr() { return mapMain.getBoundingClientRect(); }
-
-    /* nearest point on rect boundary */
-    function nearestEdge(px, py, rect) {
-      const cx = Math.max(rect.left, Math.min(px, rect.right));
-      const cy = Math.max(rect.top,  Math.min(py, rect.bottom));
-      return { x: cx, y: cy };
+    function shellRect() {
+      return shell.getBoundingClientRect();
     }
 
-    /* card rect in shell coords */
+    function mapRect() {
+      return mapMain.getBoundingClientRect();
+    }
+
     function cardShellRect(card) {
-      const r = card.getBoundingClientRect();
-      const s = sr();
-      return { left: r.left - s.left, top: r.top - s.top, right: r.right - s.left, bottom: r.bottom - s.top };
+      const rect = card.getBoundingClientRect();
+      const base = shellRect();
+      return {
+        left: rect.left - base.left,
+        top: rect.top - base.top,
+        right: rect.right - base.left,
+        bottom: rect.bottom - base.top,
+      };
     }
 
-    /* ── ECharts ── */
     function loadScript(src) {
       if (window.echarts) return Promise.resolve();
-      if (window.__echLoad) return window.__echLoad;
-      window.__echLoad = new Promise((resolve, reject) => {
-        const s = document.createElement('script'); s.src = src;
-        s.onload = resolve; s.onerror = () => { window.__echLoad = null; reject(); };
-        document.head.appendChild(s);
+      if (window.__echartsLoad) return window.__echartsLoad;
+      window.__echartsLoad = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = () => {
+          window.__echartsLoad = null;
+          reject(new Error(`Script load failed: ${src}`));
+        };
+        document.head.appendChild(script);
       });
-      return window.__echLoad;
+      return window.__echartsLoad;
+    }
+
+    async function loadGeoJson() {
+      let lastError;
+      for (const url of GEO_URLS) {
+        try {
+          const response = await fetch(url, { cache: 'no-store' });
+          if (!response.ok) throw new Error(`GeoJSON request failed: ${response.status}`);
+          return await response.json();
+        } catch (error) {
+          lastError = error;
+        }
+      }
+      throw lastError || new Error('GeoJSON request failed');
     }
 
     function initChart(echarts, geo) {
       echarts.registerMap('china', geo);
       chart = echarts.init(mapNode);
       chart.setOption({
-        backgroundColor: 'transparent', animationDuration: 700,
+        backgroundColor: 'transparent',
+        animationDuration: 600,
         geo: {
-          map: 'china', roam: false, zoom: 1.18, center: [105, 34], aspectScale: 0.85,
-          itemStyle: { areaColor: '#eeeeee', borderColor: '#c8c8c8', borderWidth: 0.6 },
+          map: 'china',
+          roam: false,
+          zoom: 1.28,
+          center: [105, 32.6],
+          aspectScale: 0.85,
+          itemStyle: { areaColor: '#eeeeee', borderColor: '#c8c8c8', borderWidth: 0.75 },
           emphasis: { itemStyle: { areaColor: '#e4e4e4' }, label: { show: false } },
         },
         series: [{
-          type: 'effectScatter', coordinateSystem: 'geo',
-          data: allVisited.map(c => ({
-            name: c.name, value: c.coords,
-            label: { position: c.labelPosition || 'right', distance: c.labelDistance || 8, fontSize: c.compactLabel ? 13 : 18 },
+          type: 'effectScatter',
+          coordinateSystem: 'geo',
+          data: visitedCities.map((city) => ({
+            name: city.name,
+            value: city.coords,
+            label: {
+              position: city.labelPosition || 'right',
+              distance: city.labelDistance || 8,
+              fontSize: city.compactLabel ? 14 : 20,
+            },
           })),
-          symbol: 'circle', symbolSize: 8,
+          symbol: 'circle',
+          symbolSize: 8,
           rippleEffect: { brushType: 'stroke', scale: 3.5, period: 3.2, color: '#111111' },
           itemStyle: { color: '#111111', borderColor: '#ffffff', borderWidth: 2 },
-          label: { show: true, position: 'right', distance: 8, color: '#30343a', fontSize: 18, fontWeight: 900, fontFamily: 'Georgia, serif', formatter: '{b}' },
+          label: {
+            show: true,
+            position: 'right',
+            color: '#1f2328',
+            fontSize: 20,
+            fontWeight: 900,
+            fontFamily: 'Georgia, "Noto Serif SC", "Songti SC", serif',
+            textBorderColor: '#ffffff',
+            textBorderWidth: 3,
+            formatter: '{b}',
+          },
           labelLayout: { hideOverlap: true },
         }],
       });
-      setTimeout(() => { positionCards(); drawConnectors(); }, 150);
-      chart.on('finished', () => { drawConnectors(); });
+
+      setTimeout(() => {
+        positionCards();
+        drawConnectors();
+      }, 150);
+      chart.on('finished', drawConnectors);
     }
 
-    /* ── connectors ── */
     function drawConnectors() {
       if (!chart) return;
-      const S = sr(), M = mr();
-      svg.setAttribute('viewBox', `0 0 ${S.width} ${S.height}`);
-      svg.style.width  = S.width + 'px';
-      svg.style.height = S.height + 'px';
+      const shellBox = shellRect();
+      const mapBox = mapRect();
+      svg.setAttribute('viewBox', `0 0 ${shellBox.width} ${shellBox.height}`);
+      svg.style.width = `${shellBox.width}px`;
+      svg.style.height = `${shellBox.height}px`;
 
       let html = '';
-      cards.forEach(card => {
+      cards.forEach((card) => {
         const cities = JSON.parse(card.dataset.cities || '[]');
         if (!cities.length) return;
-        const cRect = cardShellRect(card);
 
-        // centroid of cities in shell coords
-        let cx = 0, cy = 0;
-        cities.forEach(c => { cx += c.coords[0]; cy += c.coords[1]; });
-        const pixel = chart.convertToPixel({ geoIndex: 0 }, [cx / cities.length, cy / cities.length]);
+        let lng = 0;
+        let lat = 0;
+        cities.forEach((city) => {
+          lng += city.coords[0];
+          lat += city.coords[1];
+        });
+
+        const pixel = chart.convertToPixel({ geoIndex: 0 }, [lng / cities.length, lat / cities.length]);
         if (!pixel) return;
-        const sx = pixel[0] + (M.left - S.left);
-        const sy = pixel[1] + (M.top  - S.top);
 
-        // nearest edge midpoint
-        const midpoints = [
-          { x: (cRect.left + cRect.right) / 2, y: cRect.top },      // top
-          { x: cRect.right,                     y: (cRect.top + cRect.bottom) / 2 }, // right
-          { x: (cRect.left + cRect.right) / 2, y: cRect.bottom },   // bottom
-          { x: cRect.left,                      y: (cRect.top + cRect.bottom) / 2 }, // left
+        const sx = pixel[0] + (mapBox.left - shellBox.left);
+        const sy = pixel[1] + (mapBox.top - shellBox.top);
+        const cardBox = cardShellRect(card);
+        const edgePoints = [
+          { x: (cardBox.left + cardBox.right) / 2, y: cardBox.top },
+          { x: cardBox.right, y: (cardBox.top + cardBox.bottom) / 2 },
+          { x: (cardBox.left + cardBox.right) / 2, y: cardBox.bottom },
+          { x: cardBox.left, y: (cardBox.top + cardBox.bottom) / 2 },
         ];
-        let best = midpoints[0], bestD = Infinity;
-        midpoints.forEach(m => { const d = Math.hypot(m.x - sx, m.y - sy); if (d < bestD) { bestD = d; best = m; } });
-        const ex = best.x, ey = best.y;
 
-        // bezier
-        const dx = ex - sx, pull = Math.sign(dx || 1) * Math.max(80, Math.abs(dx));
-        const c1x = sx + pull * 0.35, c1y = sy - 24;
-        const c2x = ex - pull * 0.2,  c2y = ey + 10;
+        let target = edgePoints[0];
+        let targetDistance = Infinity;
+        edgePoints.forEach((point) => {
+          const distance = Math.hypot(point.x - sx, point.y - sy);
+          if (distance < targetDistance) {
+            target = point;
+            targetDistance = distance;
+          }
+        });
 
-        html += `<path d="M${sx} ${sy} C${c1x} ${c1y},${c2x} ${c2y},${ex} ${ey}" fill="none" stroke="#222" stroke-width="1.2" />`;
-        html += `<circle cx="${sx}" cy="${sy}" r="3.5" fill="#111" stroke="#fff" stroke-width="2" />`;
-        html += `<circle cx="${ex}" cy="${ey}" r="3"   fill="#111" stroke="#fff" stroke-width="2" />`;
+        const ex = target.x;
+        const ey = target.y;
+        const pull = Math.sign(ex - sx || 1) * Math.max(90, Math.abs(ex - sx));
+        const c1x = sx + pull * 0.35;
+        const c1y = sy - 18;
+        const c2x = ex - pull * 0.18;
+        const c2y = ey + 8;
+
+        html += `<path d="M${sx} ${sy} C${c1x} ${c1y},${c2x} ${c2y},${ex} ${ey}" fill="none" stroke="#151515" stroke-width="1.8" stroke-linecap="round" vector-effect="non-scaling-stroke" />`;
+        html += `<circle cx="${sx}" cy="${sy}" r="4" fill="#111" stroke="#fff" stroke-width="2.2" />`;
+        html += `<circle cx="${ex}" cy="${ey}" r="3.4" fill="#111" stroke="#fff" stroke-width="2" />`;
       });
+
       svg.innerHTML = html;
     }
 
-    /* ── position cards ── */
     function positionCards() {
       if (window.matchMedia('(max-width: 860px)').matches) return;
-      const S = sr(), M = mr();
-      const w = 162; // approximate card width
-      const h = 140; // approximate card height
+      const shellBox = shellRect();
+      const mapBox = mapRect();
+      const w = 246;
+      const h = 204;
       const layout = {
-        xiamen:    { x: M.right  - w * 0.4, y: M.top    + h * 0.0 },
-        siguniang: { x: M.left   - w * 1.0, y: M.top    + h * 0.1 },
-        chongqing: { x: M.left   - w * 1.0, y: M.top    + h * 1.5 },
-        shanghai:  { x: M.right  - w * 0.4, y: M.top    + h * 1.8 },
-        guangzhou: { x: M.right  - w * 1.6, y: M.bottom + h * 0.15 },
-        guiyang:   { x: M.left   - w * 0.8, y: M.bottom - h * 0.1 },
-        yunnan:    { x: M.left   - w * 0.8, y: M.bottom + h * 0.8 },
+        siguniang: { x: mapBox.left + w * 1.1, y: mapBox.top + h * 1.18 },
+        chongqing: { x: mapBox.left + w * 2.6, y: mapBox.top + h * 0.34 },
+        shanghai: { x: mapBox.right - w * 2.0, y: mapBox.top + h * 0.2 },
+        xiamen: { x: mapBox.right - w * 1.85, y: mapBox.top + h * 1.8 },
+        yunnan: { x: mapBox.left + w * 1.3, y: mapBox.bottom - h * 1.4 },
+        guiyang: { x: mapBox.left + w * 2.6, y: mapBox.bottom - h * 0.85 },
+        guangzhou: { x: mapBox.right - w * 2.2, y: mapBox.bottom - h * 0.92 },
       };
 
-      cards.forEach(card => {
+      cards.forEach((card) => {
         if (card.dataset.dragged === 'true') return;
         const pos = layout[card.dataset.cardId];
         if (!pos) return;
-        // clamp to shell
-        const left = Math.round(Math.max(4, Math.min(pos.x - S.left, S.width - w - 4)));
-        const top  = Math.round(Math.max(4, Math.min(pos.y - S.top,  S.height - h - 4)));
-        card.style.left = left + 'px';
-        card.style.top  = top  + 'px';
+        card.style.left = `${Math.round(Math.max(4, Math.min(pos.x - shellBox.left, shellBox.width - w - 4)))}px`;
+        card.style.top = `${Math.round(Math.max(4, Math.min(pos.y - shellBox.top, shellBox.height - h - 4)))}px`;
       });
     }
 
-    /* ── drag ── */
-    function onDown(e) {
-      const card = e.target.closest('.photo-card');
+    function openLightbox(card) {
+      const photos = JSON.parse(card.dataset.photos || '[]');
+      const photo = photos[0];
+      if (!photo) return;
+      lightboxImg.src = photo.src;
+      lightboxImg.alt = photo.label || card.dataset.title || '';
+      lightboxCap.textContent = `${card.dataset.title || ''} - ${card.dataset.caption || ''}`;
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImg.src = '';
+    }
+
+    function onDown(event) {
+      const card = event.target.closest('.photo-card');
       if (!card || window.matchMedia('(max-width: 860px)').matches) return;
-      e.preventDefault();
-      card.setPointerCapture(e.pointerId);
+      event.preventDefault();
+      card.setPointerCapture(event.pointerId);
       card.classList.add('is-dragging');
-      const S = sr();
-      const r = card.getBoundingClientRect();
+      const base = shellRect();
+      const rect = card.getBoundingClientRect();
       drag = {
         card,
-        sx: e.clientX, sy: e.clientY,
-        ol: r.left - S.left, ot: r.top - S.top,
+        sx: event.clientX,
+        sy: event.clientY,
+        ol: rect.left - base.left,
+        ot: rect.top - base.top,
         moved: false,
       };
     }
 
-    function onMove(e) {
+    function onMove(event) {
       if (!drag) return;
-      const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+      const dx = event.clientX - drag.sx;
+      const dy = event.clientY - drag.sy;
       if (Math.abs(dx) + Math.abs(dy) > DRAG_DEAD) drag.moved = true;
       if (!drag.moved) return;
-
-      drag.card.style.left = Math.round(drag.ol + dx) + 'px';
-      drag.card.style.top  = Math.round(drag.ot + dy) + 'px';
+      drag.card.style.left = `${Math.round(drag.ol + dx)}px`;
+      drag.card.style.top = `${Math.round(drag.ot + dy)}px`;
       drag.card.dataset.dragged = 'true';
       requestAnimationFrame(drawConnectors);
     }
 
-    function onUp(e) {
+    function onUp() {
       if (!drag) return;
-      drag.card.classList.remove('is-dragging');
+      const card = drag.card;
       const moved = drag.moved;
+      card.classList.remove('is-dragging');
       drag = null;
-      if (!moved) {
-        // click → lightbox
-        const card = e.target.closest('.photo-card');
-        if (!card) return;
-        const photos  = JSON.parse(card.dataset.photos || '[]');
-        const caption = card.dataset.caption || '';
-        if (photos.length) {
-          lightboxImg.src = photos[0].src;
-          lightboxImg.alt = photos[0].label;
-          lightboxCap.textContent = (card.querySelector('strong')?.textContent || '') + ' · ' + caption;
-          lightbox.classList.add('is-open');
-          lightbox.setAttribute('aria-hidden', 'false');
-        }
-      }
+      if (!moved) openLightbox(card);
       requestAnimationFrame(drawConnectors);
     }
 
-    /* ── lightbox ── */
-    lightboxClose.addEventListener('click', () => { lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true'); });
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) { lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true'); } });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') { lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true'); } });
-
-    /* ── image fallback ── */
-    cards.forEach(card => {
-      card.querySelectorAll('.photo-img').forEach(img => {
-        img.addEventListener('error', () => { img.hidden = true; img.nextElementSibling.hidden = false; });
+    cards.forEach((card) => {
+      card.querySelectorAll('.photo-img').forEach((img) => {
+        img.addEventListener('load', () => {
+          positionCards();
+          requestAnimationFrame(drawConnectors);
+        });
+        img.addEventListener('error', () => {
+          img.hidden = true;
+          img.nextElementSibling.hidden = false;
+          positionCards();
+          requestAnimationFrame(drawConnectors);
+        });
       });
     });
 
-    /* ── events ── */
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeLightbox();
+    });
     shell.addEventListener('pointerdown', onDown);
     document.addEventListener('pointermove', onMove);
     document.addEventListener('pointerup', onUp);
@@ -304,14 +416,13 @@ const firstPhoto = firstCard.photos[0];
       }, 200);
     });
 
-    /* ── boot ── */
     async function boot() {
       try {
         await loadScript(ECHARTS_CDN);
-        const res = await fetch(GEO_CDN);
-        const geo = await res.json();
+        const geo = await loadGeoJson();
         initChart(window.echarts, geo);
-      } catch {
+      } catch (error) {
+        console.error('Photography map failed:', error);
         mapNode.classList.add('map-failed');
         mapNode.textContent = '地图加载失败';
       }
@@ -328,8 +439,10 @@ const firstPhoto = firstCard.photos[0];
 <style>
   .photo-map-section {
     padding: 0;
-    height: calc(100vh - 8rem);
-    min-height: 560px;
+    height: min(920px, calc(100vh + 4rem));
+    min-height: 760px;
+    margin-top: 0.8rem;
+    margin-bottom: 2.5rem;
   }
 
   .map-shell {
@@ -341,7 +454,7 @@ const firstPhoto = firstCard.photos[0];
 
   .map-main {
     position: absolute;
-    inset: 1rem clamp(200px, 18vw, 280px) 1rem clamp(140px, 12vw, 200px);
+    inset: 0.8rem clamp(120px, 9vw, 170px) 4.8rem clamp(70px, 5.5vw, 120px);
   }
 
   #china-map {
@@ -350,92 +463,236 @@ const firstPhoto = firstCard.photos[0];
   }
 
   .map-failed {
-    display: grid; place-items: center; color: var(--muted); border: 1px solid var(--soft-line);
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    border: 1px solid var(--soft-line);
   }
 
-  /* svg connector */
   .connector-svg {
-    position: absolute; inset: 0;
-    pointer-events: none; z-index: 5;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
   }
 
-  /* ── cards ── */
   .photo-card {
-    position: absolute; z-index: 10;
-    width: 162px;
-    background: var(--panel); border: 1px solid #202020;
-    padding: 0.55rem 0.55rem 0.45rem;
-    box-shadow: 0.4rem 0.4rem 0 #d8d8d8;
-    cursor: grab; text-align: left; user-select: none;
+    position: absolute;
+    z-index: 10;
+    width: clamp(219px, 16.2vw, 282px);
+    background: #ffffff;
+    border: 1px solid #202020;
+    padding: 0.72rem 0.72rem 0.6rem;
+    box-shadow: 0.42rem 0.42rem 0 #d8d8d8, inset 0 0 0 1px rgba(0, 0, 0, 0.035);
+    cursor: grab;
+    text-align: left;
+    user-select: none;
     transform: rotate(1.2deg);
     transition: transform 160ms ease, box-shadow 160ms ease;
   }
+
+  #card-siguniang { transform: rotate(-1.4deg); }
+  #card-chongqing { transform: rotate(1.1deg); }
+  #card-shanghai { transform: rotate(1.3deg); }
+  #card-xiamen { transform: rotate(-0.9deg); }
+  #card-yunnan { transform: rotate(1.8deg); }
+  #card-guiyang { transform: rotate(-1.2deg); }
+  #card-guangzhou { transform: rotate(1.4deg); }
+
   .photo-card:hover {
     transform: rotate(0.5deg) translateY(-2px);
-    box-shadow: 0.5rem 0.5rem 0 #cfcfcf;
+    box-shadow: 0.52rem 0.52rem 0 #cfcfcf, inset 0 0 0 1px rgba(0, 0, 0, 0.04);
   }
+
   .photo-card.is-dragging {
-    z-index: 20; cursor: grabbing;
+    z-index: 20;
+    cursor: grabbing;
     transform: rotate(0deg) scale(1.02);
     box-shadow: 0.65rem 0.65rem 0 #c7c7c7;
-    transition: box-shadow 120ms ease;
   }
 
-  .photo-card img { -webkit-user-drag: none; }
+  .photo-card img {
+    -webkit-user-drag: none;
+  }
 
-  /* stack */
-  .photo-stack { display: block; }
-  .photo-stack.is-stack { position: relative; }
+  .photo-stack {
+    display: block;
+  }
+
+  .photo-stack.is-stack {
+    position: relative;
+    padding-top: 0.15rem;
+    padding-right: 0.9rem;
+  }
+
   .photo-layer {
-    display: block; aspect-ratio: 4/3;
-    background: #f5f5f5; overflow: hidden;
+    display: block;
+    background: linear-gradient(135deg, #fafafa, #eeeeee);
+    overflow: hidden;
+    border: 1px solid #dddddd;
+    box-shadow: inset 0 0 0 0.45rem #f7f7f7;
   }
+
   .is-stack .photo-layer {
-    position: absolute; inset: 0;
-    transition: transform 180ms ease;
+    position: absolute;
+    inset: 0.15rem 0.9rem 0 0;
+    box-shadow: 0.18rem 0.18rem 0 rgba(0, 0, 0, 0.08);
+    transition: transform 180ms ease, opacity 180ms ease;
   }
-  .is-stack .photo-layer:nth-child(1) { position: relative; }
-  .is-stack:hover .photo-layer:nth-child(2) { transform: translate(6px, -6px); }
-  .is-stack:hover .photo-layer:nth-child(3) { transform: translate(12px, -12px); }
 
-  .photo-img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(100%); }
+  .is-stack .photo-layer:nth-child(1) {
+    position: relative;
+    inset: auto;
+    z-index: 3;
+  }
+
+  .is-stack .photo-layer:nth-child(2) {
+    z-index: 2;
+    transform: translate(0.45rem, -0.35rem) rotate(3deg);
+    opacity: 0.95;
+  }
+
+  .is-stack .photo-layer:nth-child(3) {
+    z-index: 1;
+    transform: translate(0.9rem, -0.7rem) rotate(6deg);
+    opacity: 0.9;
+  }
+
+  .is-stack:hover .photo-layer:nth-child(1) {
+    transform: translate(-0.18rem, 0.25rem) rotate(-2deg);
+  }
+
+  .is-stack:hover .photo-layer:nth-child(2) {
+    transform: translate(1rem, -0.6rem) rotate(5deg);
+  }
+
+  .is-stack:hover .photo-layer:nth-child(3) {
+    transform: translate(1.85rem, -1.05rem) rotate(9deg);
+  }
+
+  .photo-img {
+    width: 100%;
+    height: auto;
+    max-height: 330px;
+    object-fit: contain;
+    display: block;
+    background: #f4f4f4;
+    padding: 0.38rem;
+  }
+
+  .is-stack .photo-img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
   .photo-fallback {
-    display: grid; place-items: center;
-    width: 100%; height: 100%;
-    color: #bbb; font-size: 0.75rem; font-weight: 700;
-    font-family: "JetBrains Mono", monospace; letter-spacing: 0.1em;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    color: #bbb;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.1em;
   }
-  .photo-info {
-    display: flex; justify-content: space-between; gap: 0.6rem;
-    margin-top: 0.45rem; font-size: 0.8rem; line-height: 1.25;
-  }
-  .photo-info strong { font-size: 0.88rem; font-weight: 800; color: var(--ink); }
-  .photo-info span { color: var(--muted); text-align: right; }
 
-  /* lightbox */
-  .lightbox {
-    position: fixed; inset: 0; z-index: 50;
-    display: none; place-items: center;
-    background: rgba(255,255,255,0.92); padding: 2rem;
+  .photo-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.6rem;
+    margin-top: 0.42rem;
+    font-size: 0.78rem;
+    line-height: 1.2;
+    border-top: 1px solid #efefef;
+    padding-top: 0.3rem;
   }
-  .lightbox.is-open { display: grid; }
+
+  .photo-info strong {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  .photo-info span {
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: none;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 2rem;
+  }
+
+  .lightbox.is-open {
+    display: grid;
+  }
+
   .lightbox img {
-    max-width: min(92vw, 1200px); max-height: 82vh; object-fit: contain;
-    border: 1px solid #202020; background: #fff;
+    max-width: min(92vw, 1200px);
+    max-height: 82vh;
+    object-fit: contain;
+    border: 1px solid #202020;
+    background: #fff;
     box-shadow: 0.55rem 0.55rem 0 #d8d8d8;
   }
-  .lightbox p { margin: 1rem 0 0; color: var(--muted); font-size: 0.95rem; }
+
+  .lightbox p {
+    margin: 1rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
   .lightbox-close {
-    position: absolute; top: 1.2rem; right: 1.5rem;
-    color: var(--ink); font-size: 2rem; line-height: 1; cursor: pointer;
-    background: none; border: none;
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    color: var(--ink);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    background: none;
+    border: none;
   }
 
   @media (max-width: 860px) {
-    .photo-map-section { height: auto; min-height: auto; padding: 1rem; }
-    .map-shell { overflow: visible; display: flex; flex-direction: column; gap: 1rem; height: auto; }
-    .map-main { position: relative; inset: auto; height: 50vh; min-height: 360px; }
-    .connector-svg { display: none; }
-    .photo-card { position: static !important; left: auto !important; top: auto !important; width: 100%; max-width: 260px; transform: rotate(0.5deg); }
+    .photo-map-section {
+      height: auto;
+      min-height: auto;
+      padding: 1rem;
+    }
+
+    .map-shell {
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      height: auto;
+    }
+
+    .map-main {
+      position: relative;
+      inset: auto;
+      height: 50vh;
+      min-height: 360px;
+    }
+
+    .connector-svg {
+      display: none;
+    }
+
+    .photo-card {
+      position: static !important;
+      left: auto !important;
+      top: auto !important;
+      width: 100%;
+      max-width: 260px;
+      transform: rotate(0.5deg);
+    }
   }
 </style>
