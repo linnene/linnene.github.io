@@ -17,13 +17,10 @@ const { entry, headings, prev, next } = Astro.props;
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} headerTitle={entry.data.title} headerSubtitle={entry.data.description}>
-  <div
-    class="content-grid article-grid"
-    style="grid-template-columns: 160px minmax(760px, 1fr) 190px; gap: 1.25rem; max-width: 1280px;"
-  >
+  <div class="content-grid article-grid">
     <ArticleToc headings={headings} />
 
-    <article class="main-column article-column" style="border-left: 0; padding-left: 0.5rem;">
+    <article class="main-column article-column">
       <header class="article-headline">
         <div class="article-meta">
           <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>

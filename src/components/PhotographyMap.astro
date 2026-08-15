@@ -5,28 +5,52 @@ const photoCards = [
     title: '四姑娘山',
     caption: '川西 / 待整理',
     cities: [{ name: '四姑娘山', coords: [102.9, 31.1] }],
-    photos: [{ src: '/images/photography/siguniang-mountain/cover.webp', label: '四姑娘山' }],
+    photos: [{
+      src: '/images/photography/siguniang-mountain/cover.webp',
+      fullSrc: '/images/photography/siguniang-mountain/cover-full.webp',
+      label: '四姑娘山',
+      note: '待整理。这里之后可以写下雪山、徒步、路途和天气留给你的印象。',
+      blog: null,
+    }],
   },
   {
     id: 'chongqing',
     title: '重庆',
     caption: '山城 / 待整理',
     cities: [{ name: '重庆', coords: [106.55, 29.56] }],
-    photos: [{ src: '/images/photography/chongqing/cover.webp', label: '重庆' }],
+    photos: [{
+      src: '/images/photography/chongqing/cover.webp',
+      fullSrc: '/images/photography/chongqing/cover-full.webp',
+      label: '重庆',
+      note: '待整理。这里之后可以写城市坡度、江岸、夜色和行走时的片段。',
+      blog: null,
+    }],
   },
   {
     id: 'shanghai',
     title: '上海',
     caption: '城市 / 待整理',
     cities: [{ name: '上海', coords: [121.47, 31.23] }],
-    photos: [{ src: '/images/photography/shanghai/cover.webp', label: '上海' }],
+    photos: [{
+      src: '/images/photography/shanghai/cover.webp',
+      fullSrc: '/images/photography/shanghai/cover-full.webp',
+      label: '上海',
+      note: '待整理。',
+      blog: null,
+    }],
   },
   {
     id: 'xiamen',
     title: '厦门',
     caption: '鼓浪屿 / 2025',
     cities: [{ name: '厦门', coords: [118.08, 24.48] }],
-    photos: [{ src: '/images/photography/xiamen/cover.webp', label: '厦门' }],
+    photos: [{
+      src: '/images/photography/xiamen/cover.webp',
+      fullSrc: '/images/photography/xiamen/cover-full.webp',
+      label: '厦门',
+      note: '海边的日落和城市轮廓很容易让人慢下来。这里之后可以继续补充旅行中的具体记忆。',
+      blog: { title: '厦门旅行日记', href: '/blog/xiamen-travel-diary/' },
+    }],
   },
   {
     id: 'yunnan',
@@ -40,9 +64,9 @@ const photoCards = [
       { name: '德钦', coords: [98.91, 28.49], labelPosition: 'left', compactLabel: true },
     ],
     photos: [
-      { src: '/images/photography/yunnan/lijiang-cover.webp', label: '丽江' },
-      { src: '/images/photography/yunnan/dali-cover.webp', label: '大理' },
-      { src: '/images/photography/yunnan/shangri-la-cover.webp', label: '香格里拉' },
+      { src: '/images/photography/yunnan/lijiang-cover.webp', fullSrc: '/images/photography/yunnan/lijiang-cover-full.webp', label: '丽江', note: '待整理。', blog: null },
+      { src: '/images/photography/yunnan/dali-cover.webp', fullSrc: '/images/photography/yunnan/dali-cover-full.webp', label: '大理', note: '待整理。', blog: null },
+      { src: '/images/photography/yunnan/shangri-la-cover.webp', fullSrc: '/images/photography/yunnan/shangri-la-cover-full.webp', label: '香格里拉', note: '待整理。', blog: null },
     ],
   },
   {
@@ -50,14 +74,14 @@ const photoCards = [
     title: '贵阳',
     caption: '黔中 / 待整理',
     cities: [{ name: '贵阳', coords: [106.63, 26.65] }],
-    photos: [{ src: '/images/photography/guiyang/cover.webp', label: '贵阳' }],
+    photos: [{ src: '/images/photography/guiyang/cover.webp', fullSrc: '/images/photography/guiyang/cover-full.webp', label: '贵阳', note: '待整理。', blog: null }],
   },
   {
     id: 'guangzhou',
     title: '广州',
     caption: '岭南 / 待整理',
     cities: [{ name: '广州', coords: [113.26, 23.13] }],
-    photos: [{ src: '/images/photography/guangzhou/cover.webp', label: '广州' }],
+    photos: [{ src: '/images/photography/guangzhou/cover.webp', fullSrc: '/images/photography/guangzhou/cover-full.webp', label: '广州', note: '待整理。', blog: null }],
   },
 ];
 
@@ -71,38 +95,59 @@ const allVisited = photoCards.flatMap((card) => card.cities);
     </div>
     <svg class="connector-svg" id="connector-svg" aria-hidden="true"></svg>
 
-    {photoCards.map((card) => (
-      <button
-        class="photo-card"
-        id={`card-${card.id}`}
-        type="button"
-        aria-label={`${card.title} - ${card.caption}`}
-        data-card-id={card.id}
-        data-title={card.title}
-        data-caption={card.caption}
-        data-photos={JSON.stringify(card.photos)}
-        data-cities={JSON.stringify(card.cities)}
-      >
-        <div class={`photo-stack ${card.photos.length > 1 ? 'is-stack' : ''}`}>
-          {card.photos.slice(0, card.photos.length > 1 ? 3 : 1).map((photo, index) => (
-            <div class="photo-layer" style={`--stack:${index}`}>
-              <img class="photo-img" src={photo.src} alt={photo.label} loading="lazy" />
-              <span class="photo-fallback" hidden>{photo.label}</span>
-            </div>
-          ))}
-        </div>
-        <div class="photo-info">
-          <strong>{card.title}</strong>
-          <span>{card.caption}</span>
-        </div>
-      </button>
-    ))}
+    <div class="photo-card-rail" aria-label="摄影地点">
+      {photoCards.map((card) => (
+        <button
+          class="photo-card"
+          id={`card-${card.id}`}
+          type="button"
+          aria-label={`${card.title} - ${card.caption}`}
+          data-card-id={card.id}
+          data-title={card.title}
+          data-caption={card.caption}
+          data-photos={JSON.stringify(card.photos)}
+          data-cities={JSON.stringify(card.cities)}
+        >
+          <div class={`photo-stack ${card.photos.length > 1 ? 'is-stack' : ''}`}>
+            {card.photos.slice(0, card.photos.length > 1 ? 3 : 1).map((photo, index) => (
+              <div class="photo-layer" style={`--stack:${index}`}>
+                <img class="photo-img" src={photo.src} alt={photo.label} loading="lazy" />
+                <span class="photo-fallback" hidden>{photo.label}</span>
+              </div>
+            ))}
+          </div>
+          <div class="photo-info">
+            <strong>{card.title}</strong>
+            <span>{card.caption}</span>
+          </div>
+        </button>
+      ))}
+    </div>
   </div>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="关闭">x</button>
-    <img id="lightbox-img" src="" alt="" />
-    <p id="lightbox-caption"></p>
+  <div class="gallery-modal" id="gallery-modal" aria-hidden="true">
+    <div class="gallery-panel" role="dialog" aria-modal="true" aria-labelledby="gallery-title">
+      <button class="gallery-close" id="gallery-close" type="button" aria-label="关闭">x</button>
+      <div class="gallery-media">
+        <img id="gallery-img" src="" alt="" />
+        <div class="gallery-controls" aria-label="图集切换">
+          <button id="gallery-prev" type="button">Prev</button>
+          <span id="gallery-count"></span>
+          <button id="gallery-next" type="button">Next</button>
+        </div>
+        <div class="gallery-thumbs" id="gallery-thumbs"></div>
+      </div>
+      <aside class="gallery-copy">
+        <p class="gallery-kicker" id="gallery-place"></p>
+        <h2 id="gallery-title"></h2>
+        <p class="gallery-caption" id="gallery-caption"></p>
+        <div class="gallery-note-block">
+          <strong>感悟</strong>
+          <p id="gallery-note"></p>
+        </div>
+        <div class="gallery-blog" id="gallery-blog"></div>
+      </aside>
+    </div>
   </div>
 </section>
 
@@ -121,13 +166,22 @@ const allVisited = photoCards.flatMap((card) => card.cities);
     const cards = Array.from(shell.querySelectorAll('.photo-card'));
     const visitedCities = JSON.parse(document.querySelector('[data-all-cities]')?.dataset.allCities || '[]');
 
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCap = document.getElementById('lightbox-caption');
-    const lightboxClose = document.getElementById('lightbox-close');
+    const gallery = document.getElementById('gallery-modal');
+    const galleryImg = document.getElementById('gallery-img');
+    const galleryClose = document.getElementById('gallery-close');
+    const galleryPrev = document.getElementById('gallery-prev');
+    const galleryNext = document.getElementById('gallery-next');
+    const galleryCount = document.getElementById('gallery-count');
+    const galleryThumbs = document.getElementById('gallery-thumbs');
+    const galleryPlace = document.getElementById('gallery-place');
+    const galleryTitle = document.getElementById('gallery-title');
+    const galleryCaption = document.getElementById('gallery-caption');
+    const galleryNote = document.getElementById('gallery-note');
+    const galleryBlog = document.getElementById('gallery-blog');
 
     let chart = null;
     let drag = null;
+    let activeGallery = { photos: [], index: 0, title: '', caption: '' };
 
     function shellRect() {
       return shell.getBoundingClientRect();
@@ -179,6 +233,7 @@ const allVisited = photoCards.flatMap((card) => card.cities);
     }
 
     function initChart(echarts, geo) {
+      const compact = window.matchMedia('(max-width: 860px)').matches;
       echarts.registerMap('china', geo);
       chart = echarts.init(mapNode);
       chart.setOption({
@@ -187,8 +242,8 @@ const allVisited = photoCards.flatMap((card) => card.cities);
         geo: {
           map: 'china',
           roam: false,
-          zoom: 1.28,
-          center: [105, 32.6],
+          zoom: compact ? 1.08 : 1.28,
+          center: compact ? [104.5, 33.2] : [105, 32.6],
           aspectScale: 0.85,
           itemStyle: { areaColor: '#eeeeee', borderColor: '#c8c8c8', borderWidth: 0.75 },
           emphasis: { itemStyle: { areaColor: '#e4e4e4' }, label: { show: false } },
@@ -201,19 +256,19 @@ const allVisited = photoCards.flatMap((card) => card.cities);
             value: city.coords,
             label: {
               position: city.labelPosition || 'right',
-              distance: city.labelDistance || 8,
-              fontSize: city.compactLabel ? 14 : 20,
+              distance: compact ? 5 : (city.labelDistance || 8),
+              fontSize: compact ? 11 : (city.compactLabel ? 14 : 20),
             },
           })),
           symbol: 'circle',
-          symbolSize: 8,
-          rippleEffect: { brushType: 'stroke', scale: 3.5, period: 3.2, color: '#111111' },
+          symbolSize: compact ? 6 : 8,
+          rippleEffect: { brushType: 'stroke', scale: compact ? 2.5 : 3.5, period: 3.2, color: '#111111' },
           itemStyle: { color: '#111111', borderColor: '#ffffff', borderWidth: 2 },
           label: {
             show: true,
             position: 'right',
             color: '#1f2328',
-            fontSize: 20,
+            fontSize: compact ? 11 : 20,
             fontWeight: 900,
             fontFamily: 'Georgia, "Noto Serif SC", "Songti SC", serif',
             textBorderColor: '#ffffff',
@@ -229,6 +284,31 @@ const allVisited = photoCards.flatMap((card) => card.cities);
         drawConnectors();
       }, 150);
       chart.on('finished', drawConnectors);
+    }
+
+    function syncChartForViewport() {
+      if (!chart) return;
+      const compact = window.matchMedia('(max-width: 860px)').matches;
+      chart.setOption({
+        geo: {
+          zoom: compact ? 1.08 : 1.28,
+          center: compact ? [104.5, 33.2] : [105, 32.6],
+        },
+        series: [{
+          symbolSize: compact ? 6 : 8,
+          rippleEffect: { scale: compact ? 2.5 : 3.5 },
+          label: { fontSize: compact ? 11 : 20 },
+          data: visitedCities.map((city) => ({
+            name: city.name,
+            value: city.coords,
+            label: {
+              position: city.labelPosition || 'right',
+              distance: compact ? 5 : (city.labelDistance || 8),
+              fontSize: compact ? 11 : (city.compactLabel ? 14 : 20),
+            },
+          })),
+        }],
+      });
     }
 
     function drawConnectors() {
@@ -315,21 +395,62 @@ const allVisited = photoCards.flatMap((card) => card.cities);
       });
     }
 
-    function openLightbox(card) {
-      const photos = JSON.parse(card.dataset.photos || '[]');
-      const photo = photos[0];
+    function renderGallery() {
+      const { photos, index, title, caption } = activeGallery;
+      const photo = photos[index];
       if (!photo) return;
-      lightboxImg.src = photo.src;
-      lightboxImg.alt = photo.label || card.dataset.title || '';
-      lightboxCap.textContent = `${card.dataset.title || ''} - ${card.dataset.caption || ''}`;
-      lightbox.classList.add('is-open');
-      lightbox.setAttribute('aria-hidden', 'false');
+
+      galleryImg.src = photo.fullSrc || photo.src;
+      galleryImg.alt = photo.label || title;
+      galleryPlace.textContent = title;
+      galleryTitle.textContent = photo.label || title;
+      galleryCaption.textContent = caption;
+      galleryNote.textContent = photo.note || '待整理。';
+      galleryCount.textContent = `${index + 1} / ${photos.length}`;
+      galleryPrev.disabled = photos.length <= 1;
+      galleryNext.disabled = photos.length <= 1;
+      galleryThumbs.hidden = photos.length <= 1;
+
+      if (photo.blog?.href && photo.blog?.title) {
+        galleryBlog.innerHTML = `<a href="${photo.blog.href}">挂钩的 Blog：${photo.blog.title}</a>`;
+      } else {
+        galleryBlog.textContent = '挂钩的 Blog：待整理';
+      }
+
+      galleryThumbs.innerHTML = photos.map((item, itemIndex) => `
+        <button class="gallery-thumb ${itemIndex === index ? 'is-active' : ''}" type="button" data-index="${itemIndex}" aria-label="查看 ${item.label || `第 ${itemIndex + 1} 张`}">
+          <img src="${item.src}" alt="" />
+        </button>
+      `).join('');
     }
 
-    function closeLightbox() {
-      lightbox.classList.remove('is-open');
-      lightbox.setAttribute('aria-hidden', 'true');
-      lightboxImg.src = '';
+    function openGallery(card) {
+      const photos = JSON.parse(card.dataset.photos || '[]');
+      if (!photos.length) return;
+      activeGallery = {
+        photos,
+        index: 0,
+        title: card.dataset.title || '',
+        caption: card.dataset.caption || '',
+      };
+      renderGallery();
+      gallery.classList.add('is-open');
+      gallery.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('gallery-open');
+    }
+
+    function closeGallery() {
+      gallery.classList.remove('is-open');
+      gallery.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('gallery-open');
+      galleryImg.src = '';
+    }
+
+    function stepGallery(direction) {
+      const total = activeGallery.photos.length;
+      if (total <= 1) return;
+      activeGallery.index = (activeGallery.index + direction + total) % total;
+      renderGallery();
     }
 
     function onDown(event) {
@@ -368,11 +489,17 @@ const allVisited = photoCards.flatMap((card) => card.cities);
       const moved = drag.moved;
       card.classList.remove('is-dragging');
       drag = null;
-      if (!moved) openLightbox(card);
+      if (!moved) openGallery(card);
       requestAnimationFrame(drawConnectors);
     }
 
     cards.forEach((card) => {
+      card.addEventListener('click', (event) => {
+        if (!window.matchMedia('(max-width: 860px)').matches) return;
+        event.preventDefault();
+        openGallery(card);
+      });
+
       card.querySelectorAll('.photo-img').forEach((img) => {
         img.addEventListener('load', () => {
           positionCards();
@@ -387,13 +514,25 @@ const allVisited = photoCards.flatMap((card) => card.cities);
       });
     });
 
-    lightboxClose.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (event) => {
-      if (event.target === lightbox) closeLightbox();
+    galleryClose.addEventListener('click', closeGallery);
+    galleryPrev.addEventListener('click', () => stepGallery(-1));
+    galleryNext.addEventListener('click', () => stepGallery(1));
+    galleryThumbs.addEventListener('click', (event) => {
+      const thumb = event.target.closest('.gallery-thumb');
+      if (!thumb) return;
+      activeGallery.index = Number.parseInt(thumb.dataset.index || '0', 10);
+      renderGallery();
+    });
+    gallery.addEventListener('click', (event) => {
+      if (event.target === gallery) closeGallery();
     });
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeLightbox();
+      if (!gallery.classList.contains('is-open')) return;
+      if (event.key === 'Escape') closeGallery();
+      if (event.key === 'ArrowLeft') stepGallery(-1);
+      if (event.key === 'ArrowRight') stepGallery(1);
     });
+
     shell.addEventListener('pointerdown', onDown);
     document.addEventListener('pointermove', onMove);
     document.addEventListener('pointerup', onUp);
@@ -403,6 +542,7 @@ const allVisited = photoCards.flatMap((card) => card.cities);
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
         if (chart) chart.resize();
+        syncChartForViewport();
         positionCards();
         setTimeout(drawConnectors, 100);
       }, 150);
@@ -437,6 +577,10 @@ const allVisited = photoCards.flatMap((card) => card.cities);
 </script>
 
 <style>
+  :global(.gallery-open) {
+    overflow: hidden;
+  }
+
   .photo-map-section {
     padding: 0;
     height: min(920px, calc(100vh + 4rem));
@@ -474,6 +618,10 @@ const allVisited = photoCards.flatMap((card) => card.cities);
     inset: 0;
     pointer-events: none;
     z-index: 5;
+  }
+
+  .photo-card-rail {
+    display: contents;
   }
 
   .photo-card {
@@ -619,41 +767,185 @@ const allVisited = photoCards.flatMap((card) => card.cities);
     text-align: right;
   }
 
-  .lightbox {
+  .gallery-modal {
     position: fixed;
     inset: 0;
     z-index: 50;
     display: none;
     place-items: center;
-    background: rgba(255, 255, 255, 0.92);
-    padding: 2rem;
+    background: rgba(245, 245, 245, 0.86);
+    padding: clamp(1rem, 3vw, 2.5rem);
+    backdrop-filter: blur(8px);
   }
 
-  .lightbox.is-open {
+  .gallery-modal.is-open {
     display: grid;
   }
 
-  .lightbox img {
-    max-width: min(92vw, 1200px);
-    max-height: 82vh;
-    object-fit: contain;
+  .gallery-panel {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.65fr);
+    gap: clamp(1.2rem, 3vw, 2.4rem);
+    width: min(1380px, 94vw);
+    height: min(820px, 88vh);
+    background: #ffffff;
     border: 1px solid #202020;
-    background: #fff;
-    box-shadow: 0.55rem 0.55rem 0 #d8d8d8;
+    box-shadow: 0.8rem 0.8rem 0 #d7d7d7;
+    padding: clamp(1rem, 2vw, 1.6rem);
   }
 
-  .lightbox p {
-    margin: 1rem 0 0;
+  .gallery-media {
+    min-width: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.85rem;
+    overflow: hidden;
+  }
+
+  .gallery-media > img {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+    background: #f5f5f5;
+    border: 1px solid #e2e2e2;
+    padding: 0.55rem;
+  }
+
+  .gallery-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .gallery-controls button,
+  .gallery-thumb {
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .gallery-controls button {
+    border-bottom: 1px solid currentColor;
+    padding: 0.1rem 0;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .gallery-controls button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .gallery-thumbs {
+    display: flex;
+    gap: 0.55rem;
+    overflow-x: auto;
+    padding-bottom: 0.1rem;
+  }
+
+  .gallery-thumbs[hidden] {
+    display: none;
+  }
+
+  .gallery-thumb {
+    width: 72px;
+    height: 54px;
+    flex: 0 0 auto;
+    border: 1px solid transparent;
+    padding: 0.2rem;
+    opacity: 0.55;
+    transition: opacity 140ms ease, border-color 140ms ease, transform 140ms ease;
+  }
+
+  .gallery-thumb:hover,
+  .gallery-thumb.is-active {
+    opacity: 1;
+    border-color: #202020;
+    transform: translateY(-1px);
+  }
+
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-copy {
+    min-width: 0;
+    border-left: 1px solid #dedede;
+    padding: 0.6rem 0.2rem 0.6rem clamp(1.1rem, 2vw, 1.8rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding-bottom: clamp(1rem, 8vh, 5rem);
+  }
+
+  .gallery-kicker {
+    margin: 0 0 0.45rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .gallery-copy h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2.2rem, 4vw, 4.4rem);
+    line-height: 0.95;
+  }
+
+  .gallery-caption {
+    margin: 0.7rem 0 1.8rem;
     color: var(--muted);
     font-size: 0.95rem;
   }
 
-  .lightbox-close {
-    position: absolute;
-    top: 1.2rem;
-    right: 1.5rem;
+  .gallery-note-block {
+    border-top: 1px solid #202020;
+    padding-top: 1rem;
+  }
+
+  .gallery-note-block strong {
+    display: block;
+    margin-bottom: 0.65rem;
     color: var(--ink);
-    font-size: 2rem;
+    font-size: 1rem;
+  }
+
+  .gallery-note-block p {
+    margin: 0;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  .gallery-blog {
+    margin-top: 1.4rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .gallery-blog a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  .gallery-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    color: var(--ink);
+    font-size: 1.6rem;
     line-height: 1;
     cursor: pointer;
     background: none;
@@ -664,35 +956,124 @@ const allVisited = photoCards.flatMap((card) => card.cities);
     .photo-map-section {
       height: auto;
       min-height: auto;
-      padding: 1rem;
+      padding: 0.5rem 0 1.25rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
     }
 
     .map-shell {
-      overflow: visible;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      overflow: hidden;
+      display: block;
       height: auto;
     }
 
     .map-main {
       position: relative;
       inset: auto;
-      height: 50vh;
-      min-height: 360px;
+      height: clamp(290px, 78vw, 390px);
+      min-height: 0;
+      margin: 0 -0.35rem;
     }
 
     .connector-svg {
       display: none;
     }
 
+    .photo-card-rail {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      padding: 0.6rem 1.1rem 1.15rem;
+    }
+
+    .photo-card-rail::-webkit-scrollbar {
+      display: none;
+    }
+
     .photo-card {
-      position: static !important;
+      position: relative !important;
       left: auto !important;
       top: auto !important;
-      width: 100%;
-      max-width: 260px;
+      width: min(76vw, 300px);
+      max-width: none;
+      flex: 0 0 auto;
+      scroll-snap-align: center;
       transform: rotate(0.5deg);
+      cursor: pointer;
+      touch-action: pan-x;
+    }
+
+    .photo-card:first-child {
+      margin-left: 0.1rem;
+    }
+
+    .gallery-panel {
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(0, auto) auto;
+      gap: 1rem;
+      width: calc(100vw - 1rem);
+      height: calc(100dvh - 1rem);
+      padding: 2.6rem 0.75rem 1rem;
+      box-shadow: 0.35rem 0.35rem 0 #d7d7d7;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    .gallery-copy {
+      border-left: none;
+      border-top: 1px solid #dedede;
+      padding: 1rem 0.2rem 0.5rem;
+      justify-content: start;
+    }
+
+    .gallery-media {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: visible;
+    }
+
+    .gallery-media > img {
+      height: auto;
+      max-height: 54dvh;
+      aspect-ratio: auto;
+    }
+
+    .gallery-copy h2 {
+      font-size: clamp(2.2rem, 14vw, 3.4rem);
+    }
+
+    .gallery-caption {
+      margin-bottom: 1rem;
+    }
+
+    .gallery-close {
+      top: 0.6rem;
+      right: 0.75rem;
+      z-index: 2;
+      min-width: 2.25rem;
+      min-height: 2.25rem;
+      font-size: 1.4rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .gallery-modal {
+      padding: 0;
+    }
+
+    .gallery-panel {
+      width: 100vw;
+      height: 100dvh;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .photo-info {
+      font-size: 0.72rem;
     }
   }
 </style>
