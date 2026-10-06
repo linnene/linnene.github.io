@@ -57,6 +57,23 @@ img {
   box-shadow: none;
 }
 
+.prose figure {
+  margin: 2.2rem 0;
+}
+
+.prose figure img {
+  margin: 0 auto;
+}
+
+.prose figcaption {
+  margin: 0.7rem auto 0;
+  max-width: 42rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.65;
+  text-align: center;
+}
+
 .page-shell {
   min-height: calc(100vh - 20px);
   display: flex;
