@@ -24,6 +24,13 @@ const contactLinks = [
     <title>{profile.name} — Research &amp; Engineering</title>
   </head>
   <body>
+    <canvas id="research-ocean" aria-hidden="true"></canvas>
+    <button id="ocean-toggle" type="button" aria-label="Toggle ocean animation" aria-pressed="false" hidden>Pause ocean</button>
+    <script is:inline type="module">
+      import('/scripts/research-ocean.js').then(() => {
+        document.querySelector('#ocean-toggle').hidden = false;
+      }).catch(() => { /* The profile stays fully usable without animation. */ });
+    </script>
     <a class="skip-link" href="#research">Skip to research</a>
     <main class="academic-page">
       <header class="profile-header">
@@ -123,7 +130,9 @@ const contactLinks = [
   :global(a:hover) { text-decoration: underline; }
   :global(a:focus-visible) { outline: 2px solid #24658b; outline-offset: 5px; border-radius: 1px; }
   :global(::selection) { background: #dcebf5; color: #142c3b; }
-  .academic-page { width: min(100% - 64px, 1000px); margin: 0 auto; padding: 46px 0 36px; }
+  #research-ocean { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: .78; }
+  #ocean-toggle { position: fixed; right: 16px; bottom: 16px; z-index: 2; border: 1px solid #dce3e8; border-radius: 4px; padding: 6px 10px; background: #fffffff2; color: #526879; font: 12px Arial, sans-serif; cursor: pointer; }
+  .academic-page { position: relative; z-index: 1; width: min(100% - 64px, 1000px); margin: 0 auto; padding: 46px 0 36px; background: #ffffffdb; box-shadow: 0 0 45px 30px #ffffffdb; }
   .profile-header { margin-bottom: 68px; }
   h1 { margin: 0 0 34px; text-align: center; font-size: 43px; line-height: 1.2; font-weight: 500; letter-spacing: -.8px; }
   p { margin: 0 0 17px; }
@@ -159,6 +168,7 @@ const contactLinks = [
     footer { margin-top: 45px; }
   }
   @media print {
+    #research-ocean, #ocean-toggle { display: none; }
     .academic-page { width: 100%; padding: 0; }
     :global(body) { font-size: 11pt; }
     h1 { font-size: 24pt; margin-bottom: 18pt; }
