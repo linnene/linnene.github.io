@@ -64,10 +64,15 @@ const contactLinks = [
       <section id="research" aria-labelledby="research-heading">
         <h2 id="research-heading">Research</h2>
         {profile.research.map((project) => (
-          <article class="entry">
+          <article class="entry research-entry">
             <h3>{project.title}</h3>
             <p class="entry-context">{project.context}</p>
             <p class="entry-status">{project.status}</p>
+            {'image' in project && project.image && (
+              <figure class="research-demo">
+                <img src={project.image.src} alt={project.image.alt} width="572" height="396" loading="lazy" decoding="async" />
+              </figure>
+            )}
             <p class="entry-description"><ResearchText text={project.description} /></p>
             <ul class="project-highlights">
               {project.highlights.map((point) => <li><strong>{point.title}.</strong> <ResearchText text={point.description} /></li>)}
@@ -167,6 +172,9 @@ const contactLinks = [
   section { margin-top: 49px; scroll-margin-top: 24px; }
   h2 { margin: 0 0 23px; font-size: 28px; font-weight: 500; line-height: 1.3; letter-spacing: -.35px; }
   .entry + .entry { margin-top: 34px; }
+  .research-entry { display: flow-root; }
+  .research-demo { float: right; width: 280px; max-width: 100%; margin: 13px 0 18px 28px; }
+  .research-demo img { display: block; width: 100%; height: auto; }
   h3 { margin: 0 0 5px; color: #24658b; font-size: 18px; font-weight: 600; line-height: 1.5; }
   .entry-context { margin: 0; }
   .entry-status { margin: 0; font-style: italic; color: #545454; }
@@ -194,6 +202,7 @@ const contactLinks = [
   .skip-link { position: absolute; left: 20px; top: -80px; padding: 8px 15px; background: white; }
   .skip-link:focus { top: 10px; }
   @media (max-width: 640px) {
+    .research-demo { float: none; margin: 14px auto 18px; }
     :global(body) { font-size: 16px; line-height: 1.7; }
     .academic-page { width: calc(100% - 38px); padding-top: 34px; }
     h1 { font-size: 36px; margin-bottom: 28px; }

@@ -41,6 +41,10 @@ export const researchProfile = {
       title: 'Individual–Interaction Disentangled World Models for Communication-Based Collaboration',
       context: 'Undergraduate research · Chongqing University',
       status: 'Baseline reproduction in progress',
+      image: {
+        src: '/images/research/overcooked-demo.gif',
+        alt: 'Three agents working in three separated areas of an Overcooked kitchen.',
+      },
       description: 'Exploring how **individual-agent state modeling**, **multi-agent interaction modeling**, and execution-time communication can support cooperative decisions.',
       highlights: [
         { title: 'Research question', description: 'How can interaction modeling support policy learning while respecting the **information available to each agent during execution**?' },
