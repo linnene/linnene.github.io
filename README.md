@@ -57,3 +57,7 @@ src/site.config.ts
 ```text
 src/styles/global.css
 ```
+
+## 科研主页
+
+独立页面位于 `/research/`，使用单独布局，不改变现有博客首页。内容维护与发布前检查见 [docs/RESEARCH.md](docs/RESEARCH.md)。
