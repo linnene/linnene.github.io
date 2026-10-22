@@ -1,0 +1,11 @@
+---
+interface Props { text: string }
+const { text } = Astro.props;
+// Deliberately authored emphasis, rendered as escaped text rather than raw HTML.
+const parts = text.split(/\*\*(.*?)\*\*/g);
+---
+{parts.map((part, index) => index % 2 ? <strong>{part}</strong> : part)}
+
+<style>
+  strong { font-weight: 700; color: #172b3a; }
+</style>
