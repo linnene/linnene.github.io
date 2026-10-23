@@ -38,7 +38,7 @@ export const researchProfile = {
   ],
   research: [
     {
-      title: 'Individual–Interaction Disentangled World Models for Communication-Based Collaboration',
+      title: 'Multi-Agent Collaboration with Disentangled World Models',
       context: 'Undergraduate research · Chongqing University',
       status: 'Baseline reproduction in progress',
       image: {
@@ -60,21 +60,10 @@ export const researchProfile = {
       title: 'Execution-Time Sharing and Use of Failure Experience',
       context: 'Undergraduate research · Chongqing University',
       status: 'Exploratory direction · Problem formulation',
-      description: 'Exploring how one agent’s failure during execution can help teammates **avoid repeating similar mistakes**.',
+      description: 'Exploring a **world-model-independent mechanism** for sharing failure experiences during execution, helping teammates **avoid repeating similar mistakes**.',
       highlights: [
         { title: 'Research question', description: 'Can a **learned latent representation** of an unsuccessful interaction guide teammates in similar, but not identical, situations?' },
         { title: 'Focus', description: 'Learning what to retain from a failure, **when to share it**, and how teammates can use it to **adjust their policies**.' },
-      ],
-      links: [],
-    },
-    {
-      title: 'Lightweight Teammate Modeling under Partial Communication',
-      context: 'Undergraduate research · Chongqing University',
-      status: 'Exploratory direction · Problem formulation',
-      description: 'Exploring **compact teammate models** to support collaborative decisions when messages are **incomplete or outdated**.',
-      highlights: [
-        { title: 'Research question', description: 'Can local observations and **cached communication** support **short-term predictions** of teammates’ states and behavior?' },
-        { title: 'Focus', description: 'Compact representations of **teammate policy knowledge** to inform decisions without requiring complete, continuous communication.' },
       ],
       links: [],
     },
