@@ -65,7 +65,7 @@ export const researchProfile = {
         { title: 'Research question', description: 'Can a **learned latent representation** of an unsuccessful interaction guide teammates in similar, but not identical, situations?' },
         { title: 'Focus', description: 'Learning what to retain from a failure, **when to share it**, and how teammates can use it to **adjust their policies**.' },
       ],
-      links: [],
+      links: [{ label: 'PitfallRelay', href: 'https://github.com/linnene/pitfall-relay' }],
     },
   ],
   projects: [
