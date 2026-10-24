@@ -99,7 +99,7 @@ const contactLinks = [
                 <p class="entry-context">{project.context}</p>
               </div>
               {'logo' in project && project.logo && (
-                <img class="project-logo" src={project.logo} alt="GeoTrave" width="180" height="52" loading="lazy" decoding="async" />
+                <img class="project-logo" src={project.logo} alt={project.logoAlt} width={project.logoWidth} height={project.logoHeight} style={`width: ${project.logoWidth}px; max-width: 30%; height: auto; flex-shrink: 0;`} loading="lazy" decoding="async" />
               )}
             </div>
             <p class="entry-description"><ResearchText text={project.description} /></p>

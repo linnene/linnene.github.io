@@ -72,6 +72,9 @@ export const researchProfile = {
     {
       title: 'GeoTrave: Multi-Agent Travel Planning',
       logo: '/images/experience/geotrave-logo.png',
+      logoAlt: 'GeoTrave',
+      logoWidth: 180,
+      logoHeight: 52,
       context: 'Personal project · Python, LangGraph, FastAPI, PostGIS',
       description: 'A conversational multi-agent engine that turns travel preferences into **personalized recommendations and day-by-day itineraries**.',
       highlights: [
@@ -91,6 +94,11 @@ export const researchProfile = {
     },
     {
       title: 'Digital Twin and Simulation for RoboCon',
+      // Official header asset from http://www.cnrobocon.net/sys-nd/1102.html.
+      logo: '/images/experience/robocon-mark.svg',
+      logoAlt: 'ROBOCON',
+      logoWidth: 80,
+      logoHeight: 49,
       context: 'Digital Twin Group Lead · University robotics team · Fusion 360, Unity',
       description: 'Worked with the team’s digital twin group to build a **1:1 virtual replica of the competition arena** in Unity, using robot models created in Fusion 360.',
       highlights: [
