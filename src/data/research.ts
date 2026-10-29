@@ -39,11 +39,11 @@ export const researchProfile = {
   research: [
     {
       title: 'Multi-Agent Collaboration with Disentangled World Models',
-      context: 'Undergraduate research · Chongqing University',
+      context: 'Chongqing University',
       status: 'Baseline reproduction in progress',
       image: {
-        src: '/images/research/overcooked-demo.gif',
-        alt: 'Three agents working in three separated areas of an Overcooked kitchen.',
+        src: '/images/research/dreamtalk-demo.gif',
+        alt: 'DreamTalk multi-agent collaboration demonstration.',
       },
       description: 'Exploring how **individual-agent state modeling**, **multi-agent interaction modeling**, and execution-time communication can support cooperative decisions.',
       highlights: [
@@ -54,11 +54,12 @@ export const researchProfile = {
       links: [
         { label: 'My-CoDreamer', href: 'https://github.com/linnene/My-CoDreamer' },
         { label: 'CoDreamer paper', href: 'https://arxiv.org/abs/2406.13600' },
+        { label: 'DreamTalk', href: 'https://github.com/linnene/DreamTalk', newLine: true },
       ],
     },
     {
       title: 'Execution-Time Sharing and Use of Failure Experience',
-      context: 'Undergraduate research · Chongqing University',
+      context: 'Chongqing University',
       status: 'Exploratory direction · Problem formulation',
       description: 'Exploring a **world-model-independent mechanism** for sharing failure experiences during execution, helping teammates **avoid repeating similar mistakes**.',
       highlights: [

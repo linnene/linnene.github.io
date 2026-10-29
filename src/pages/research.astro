@@ -70,7 +70,7 @@ const contactLinks = [
             <p class="entry-status">{project.status}</p>
             {'image' in project && project.image && (
               <figure class="research-demo">
-                <img src={project.image.src} alt={project.image.alt} width="572" height="396" loading="lazy" decoding="async" />
+                <img src={project.image.src} alt={project.image.alt} width="720" height="405" loading="lazy" decoding="async" />
               </figure>
             )}
             <p class="entry-description"><ResearchText text={project.description} /></p>
@@ -80,7 +80,7 @@ const contactLinks = [
             <p class="entry-links">
               {project.links.map((link, index) => (
                 <>
-                  {index > 0 && <span aria-hidden="true"> / </span>}
+                  {'newLine' in link && link.newLine ? <br /> : index > 0 && <span aria-hidden="true"> / </span>}
                   <a href={link.href}>{link.label}</a>
                 </>
               ))}
@@ -173,7 +173,7 @@ const contactLinks = [
   h2 { margin: 0 0 23px; font-size: 28px; font-weight: 500; line-height: 1.3; letter-spacing: -.35px; }
   .entry + .entry { margin-top: 34px; }
   .research-entry { display: flow-root; }
-  .research-demo { float: right; width: 280px; max-width: 100%; margin: 13px 0 18px 28px; }
+  .research-demo { float: right; width: 340px; max-width: 100%; margin: 13px 0 18px 28px; }
   .research-demo img { display: block; width: 100%; height: auto; }
   h3 { margin: 0 0 5px; color: #24658b; font-size: 18px; font-weight: 600; line-height: 1.5; }
   .entry-context { margin: 0; }
