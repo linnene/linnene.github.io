@@ -1,0 +1,37 @@
+---
+import { researchProfile as profile } from '../data/research';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="linnene 的 Plog。" />
+    <link rel="canonical" href="https://linnene.github.io/plog/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Plog — {profile.name}</title>
+  </head>
+  <body>
+    <main>
+      <nav aria-label="页面导航"><a href="/">← Research</a></nav>
+      <header><h1>Plog</h1><p>正在构建。</p></header>
+      <section id="plog-content" aria-label="Plog 内容">
+        <!-- 后续在这里构建 Plog 内容与布局。 -->
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(html) { color-scheme: light; background: #fff; }
+  :global(body) { margin: 0; color: #202124; font-family: Arial, "Songti SC", serif; line-height: 1.7; }
+  main { max-width: 1000px; margin: 0 auto; padding: 40px 32px 80px; }
+  a { color: #24658b; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid #24658b; outline-offset: 4px; }
+  header { margin-top: 64px; }
+  h1 { margin: 0 0 12px; font-size: 42px; font-weight: 500; }
+  p { margin: 0; color: #707070; }
+  #plog-content { min-height: 240px; }
+</style>

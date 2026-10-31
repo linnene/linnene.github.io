@@ -1,40 +1,226 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogSidebar from '../components/BlogSidebar.astro';
-import ArticleCard from '../components/ArticleCard.astro';
-import { publishedPosts, sortByDate } from '../lib/blog';
-import { site } from '../site.config';
-
-const posts = sortByDate(publishedPosts(await getCollection('blog')));
-const recentPosts = posts.slice(0, 5);
+import { researchProfile as profile } from '../data/research';
+import ResearchText from '../components/ResearchText.astro';
+const contactLinks = [
+  ...(profile.email ? [{ label: 'Email', href: `mailto:${profile.email}` }] : []),
+  ...(profile.cv ? [{ label: 'CV', href: profile.cv }] : []),
+  { label: 'GitHub', href: profile.github },
+];
 ---
 
-<BaseLayout
-  title="Home"
-  headerTitle={site.homeTitle}
-  headerSubtitle={site.homeSubtitle}
-  subtitleClass="babel-subtitle"
->
-  <div class="content-grid">
-    <section class="main-column">
-      <section class="intro-block">
-        <h1 class="page-title">最近更新</h1>
-        <p class="page-lead">
-          这里不只记录学习。技术笔记、项目复盘、阅读摘录、工具折腾、生活里的观察都会放在这里。
-          目前先把写作和阅读体验做好，内容结构之后再慢慢长出来。
-        </p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={profile.description} />
+    <link rel="canonical" href="https://linnene.github.io/" />
+    <meta name="author" content={profile.name} />
+    <meta property="og:title" content={`${profile.name} — Research & Engineering`} />
+    <meta property="og:description" content={profile.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://linnene.github.io/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{profile.name} — Research &amp; Engineering</title>
+  </head>
+  <body>
+    <canvas id="research-ocean" aria-hidden="true"></canvas>
+    <button id="ocean-toggle" type="button" aria-label="Toggle ocean animation" aria-pressed="false" hidden>Pause ocean</button>
+    <script is:inline type="module">
+      import('/scripts/research-ocean.js').then(() => {
+        document.querySelector('#ocean-toggle').hidden = false;
+      }).catch(() => { /* The profile stays fully usable without animation. */ });
+    </script>
+    <a class="skip-link" href="#research">Skip to research</a>
+    <main class="academic-page">
+      <header class="profile-header">
+        <div class="profile-banner">
+          <img
+            src={profile.banner.src}
+            alt={profile.banner.alt}
+            width={profile.banner.width}
+            height={profile.banner.height}
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+        <h1>{profile.name}</h1>
+        <div class="biography">
+          {profile.introduction.map((paragraph) => (
+            <p>{paragraph.map((part) => 'strong' in part && part.strong ? <strong>{part.text}</strong> : part.text)}</p>
+          ))}
+        </div>
+        <nav class="contact-links" aria-label="Contact and personal links">
+          {contactLinks.map((link, index) => (
+            <>
+              {index > 0 && <span aria-hidden="true">/</span>}
+              <a href={link.href}>{link.label}</a>
+            </>
+          ))}
+        </nav>
+      </header>
+
+      <section id="research" aria-labelledby="research-heading">
+        <h2 id="research-heading">Research</h2>
+        {profile.research.map((project) => (
+          <article class="entry research-entry">
+            <h3>{project.title}</h3>
+            <p class="entry-context">{project.context}</p>
+            <p class="entry-status">{project.status}</p>
+            {'image' in project && project.image && (
+              <figure class="research-demo">
+                <img src={project.image.src} alt={project.image.alt} width="720" height="405" loading="lazy" decoding="async" />
+              </figure>
+            )}
+            <p class="entry-description"><ResearchText text={project.description} /></p>
+            <ul class="project-highlights">
+              {project.highlights.map((point) => <li><strong>{point.title}.</strong> <ResearchText text={point.description} /></li>)}
+            </ul>
+            <p class="entry-links">
+              {project.links.map((link, index) => (
+                <>
+                  {'newLine' in link && link.newLine ? <br /> : index > 0 && <span aria-hidden="true"> / </span>}
+                  <a href={link.href}>{link.label}</a>
+                </>
+              ))}
+            </p>
+          </article>
+        ))}
       </section>
 
-      <div class="post-list">
-        {recentPosts.length > 0 ? (
-          recentPosts.map((entry) => <ArticleCard entry={entry} />)
-        ) : (
-          <p class="empty-state">还没有发布文章。第一篇 MDX 放进 <code>src/content/blog/</code> 后会自动出现在这里。</p>
-        )}
-      </div>
-    </section>
+      <section aria-labelledby="projects-heading">
+        <h2 id="projects-heading">Projects</h2>
+        {profile.projects.map((project) => (
+          <article class="entry">
+            <div class="project-heading">
+              <div>
+                <h3>{project.title}</h3>
+                <p class="entry-context">{project.context}</p>
+              </div>
+              {'logo' in project && project.logo && (
+                <img class="project-logo" src={project.logo} alt={project.logoAlt} width={project.logoWidth} height={project.logoHeight} style={`width: ${project.logoWidth}px; max-width: 30%; height: auto; flex-shrink: 0;`} loading="lazy" decoding="async" />
+              )}
+            </div>
+            <p class="entry-description"><ResearchText text={project.description} /></p>
+            <ul class="project-highlights">
+              {project.highlights.map((point) => <li><strong>{point.title}.</strong> <ResearchText text={point.description} /></li>)}
+            </ul>
+            {project.links.length > 0 && (
+              <p class="entry-links">
+                {project.links.map((link) => <a href={link.href}>{link.label}</a>)}
+              </p>
+            )}
+            {'outcome' in project && project.outcome && (
+              <p class="project-outcome"><ResearchText text={project.outcome} /></p>
+            )}
+          </article>
+        ))}
+      </section>
 
-    <BlogSidebar />
-  </div>
-</BaseLayout>
+      <section aria-labelledby="experience-heading">
+        <h2 id="experience-heading">Engineering Experience</h2>
+        {profile.experience.map((experience) => (
+          <article class="entry">
+            <div class="experience-heading">
+              <div>
+                <h3>{experience.title}</h3>
+                <p class="entry-context">{experience.context}</p>
+                <p class="experience-dates">{experience.dates}</p>
+              </div>
+              {experience.logo && experience.organizationUrl && (
+                <a class="organization-logo" href={experience.organizationUrl} aria-label={`${experience.organizationName} official website`}>
+                  <img src={experience.logo} alt={experience.organizationName} width={experience.logoWidth} height="40" style={`width: ${experience.logoWidth}px`} loading="lazy" decoding="async" />
+                </a>
+              )}
+            </div>
+            <p class="entry-description"><ResearchText text={experience.description} /></p>
+            <ul class="experience-contributions">
+              {experience.contributions.map((contribution) => (
+                <li><strong>{contribution.title}.</strong> <ResearchText text={contribution.description} /></li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </section>
+
+      <footer>
+        <span>Last updated October 2026</span>
+      </footer>
+    </main>
+  </body>
+</html>
+
+<style>
+  :global(html) { color-scheme: light; background: #fff; scroll-behavior: auto; }
+  :global(body) { margin: 0; color: #202124; background: #fff; font-family: Arial, Helvetica, sans-serif; font-size: 17px; line-height: 1.72; -webkit-font-smoothing: antialiased; }
+  :global(*) { box-sizing: border-box; }
+  :global(a) { color: #24658b; text-decoration: none; text-underline-offset: 4px; }
+  :global(a:hover) { text-decoration: underline; }
+  :global(a:focus-visible) { outline: 2px solid #24658b; outline-offset: 5px; border-radius: 1px; }
+  :global(::selection) { background: #dcebf5; color: #142c3b; }
+  #research-ocean { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: .78; }
+  #ocean-toggle { position: fixed; right: 16px; bottom: 16px; z-index: 2; border: 1px solid #dce3e8; border-radius: 4px; padding: 6px 10px; background: #fffffff2; color: #526879; font: 12px Arial, sans-serif; cursor: pointer; }
+  .academic-page { position: relative; z-index: 1; width: min(100% - 64px, 1000px); margin: 0 auto; padding: 46px 0 36px; background: #ffffffdb; box-shadow: 0 0 45px 30px #ffffffdb; }
+  .profile-header { margin-bottom: 68px; }
+  h1 { margin: 0 0 34px; text-align: center; font-size: 43px; line-height: 1.2; font-weight: 500; letter-spacing: -.8px; }
+  p { margin: 0 0 17px; }
+  .biography strong { font-weight: 700; color: #172b3a; }
+  .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 10px; margin-top: 24px; }
+  .contact-links span { color: #686868; }
+  section { margin-top: 49px; scroll-margin-top: 24px; }
+  h2 { margin: 0 0 23px; font-size: 28px; font-weight: 500; line-height: 1.3; letter-spacing: -.35px; }
+  .entry + .entry { margin-top: 34px; }
+  .research-entry { display: flow-root; }
+  .research-demo { float: right; width: 340px; max-width: 100%; margin: 13px 0 18px 28px; }
+  .research-demo img { display: block; width: 100%; height: auto; }
+  h3 { margin: 0 0 5px; color: #24658b; font-size: 18px; font-weight: 600; line-height: 1.5; }
+  .entry-context { margin: 0; }
+  .entry-status { margin: 0; font-style: italic; color: #545454; }
+  .entry-description { margin-top: 13px; }
+  .entry-description p:last-child { margin-bottom: 0; }
+  .entry-links { margin-top: 11px; margin-bottom: 0; }
+  .entry-links span { color: #686868; }
+  .profile-banner { width: 100%; margin: 0 0 35px; transform: translateX(-24px); }
+  .profile-banner img { display: block; width: 100%; height: auto; margin-inline: auto; }
+  .experience-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; }
+  .project-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; }
+  .project-heading > div { flex: 1; min-width: 0; }
+  .project-logo { display: block; width: 180px; max-width: 30%; height: auto; flex-shrink: 0; margin-left: auto; }
+  .project-highlights { margin: 10px 0 0; padding-left: 22px; }
+  .project-highlights li + li { margin-top: 6px; }
+  .project-outcome { margin: 13px 0 0; }
+  .project-highlights strong { font-weight: 700; color: #172b3a; }
+  .experience-dates { margin: 2px 0 0; color: #545454; font-size: 15px; }
+  .experience-contributions { margin: 12px 0 0; padding-left: 22px; }
+  .experience-contributions li + li { margin-top: 9px; }
+  .experience-contributions strong { font-weight: 700; color: #172b3a; }
+  .organization-logo { flex-shrink: 0; max-width: 100%; }
+  .organization-logo img { display: block; max-width: 100%; height: auto; object-fit: contain; }
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 60px; padding-top: 20px; font-size: 14px; color: #6b6b6b; border-top: 1px solid #e9e9e9; }
+  .skip-link { position: absolute; left: 20px; top: -80px; padding: 8px 15px; background: white; }
+  .skip-link:focus { top: 10px; }
+  @media (max-width: 640px) {
+    .research-demo { float: none; margin: 14px auto 18px; }
+    :global(body) { font-size: 16px; line-height: 1.7; }
+    .academic-page { width: calc(100% - 38px); padding-top: 34px; }
+    h1 { font-size: 36px; margin-bottom: 28px; }
+    h2 { font-size: 25px; margin-bottom: 20px; }
+    h3 { font-size: 17px; }
+    .profile-header { margin-bottom: 48px; }
+    section { margin-top: 40px; }
+    .entry + .entry { margin-top: 30px; }
+    footer { margin-top: 45px; }
+  }
+  @media print {
+    #research-ocean, #ocean-toggle { display: none; }
+    .academic-page { width: 100%; padding: 0; }
+    :global(body) { font-size: 11pt; }
+    h1 { font-size: 24pt; margin-bottom: 18pt; }
+    h2 { font-size: 16pt; break-after: avoid; }
+    h3 { break-after: avoid; }
+    .profile-header { margin-bottom: 24pt; }
+    section { margin-top: 20pt; }
+    .skip-link { display: none; }
+    a { color: inherit; }
+  }
+</style>
